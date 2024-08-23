@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCuentaDto } from './dto/create-cuenta.dto';
-import { UpdateCuentaDto } from './dto/update-cuenta.dto';
+import { Cuenta } from './cuenta.entity';
+
 
 @Injectable()
 export class CuentaService {
-  create(createCuentaDto: CreateCuentaDto) {
+  create(cuenta: Cuenta) {
     return 'This action adds a new cuenta';
   }
 
@@ -16,7 +16,7 @@ export class CuentaService {
     return `This action returns a #${id} cuenta`;
   }
 
-  update(id: number, updateCuentaDto: UpdateCuentaDto) {
+  update(id: number, cuenta: Cuenta) {
     return `This action updates a #${id} cuenta`;
   }
 

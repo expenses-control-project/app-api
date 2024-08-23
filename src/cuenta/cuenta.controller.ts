@@ -8,14 +8,15 @@ import {
 	Delete,
 } from '@nestjs/common';
 import {CuentaService} from './cuenta.service';
+import { Cuenta } from './cuenta.entity';
 
 @Controller('cuenta')
 export class CuentaController {
 	constructor(private readonly cuentaService: CuentaService) {}
 
 	@Post()
-	create(@Body() createCuentaDto: CreateCuentaDto) {
-		return this.cuentaService.create(createCuentaDto);
+	create(@Body() cuenta: Cuenta) {
+		return this.cuentaService.create(cuenta);
 	}
 
 	@Get()
@@ -24,17 +25,17 @@ export class CuentaController {
 	}
 
 	@Get(':id')
-	findOne(@Param('id') id: string) {
+	findOne(@Param('id') id: number) {
 		return this.cuentaService.findOne(+id);
 	}
 
 	@Patch(':id')
-	update(@Param('id') id: string, @Body() updateCuentaDto: UpdateCuentaDto) {
-		return this.cuentaService.update(+id, updateCuentaDto);
+	update(@Param('id') id: number, @Body() cuenta: Cuenta) {
+		return this.cuentaService.update(+id, cuenta);
 	}
 
 	@Delete(':id')
-	remove(@Param('id') id: string) {
+	remove(@Param('id') id: number) {
 		return this.cuentaService.remove(+id);
 	}
 }

@@ -1,15 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MovimientoService } from './movimiento.service';
-import { CreateMovimientoDto } from './dto/create-movimiento.dto';
-import { UpdateMovimientoDto } from './dto/update-movimiento.dto';
+import { Movimiento } from './movimiento.entity';
 
 @Controller('movimiento')
 export class MovimientoController {
   constructor(private readonly movimientoService: MovimientoService) {}
 
   @Post()
-  create(@Body() createMovimientoDto: CreateMovimientoDto) {
-    return this.movimientoService.create(createMovimientoDto);
+  create(@Body() movimiento: Movimiento) {
+    return this.movimientoService.create(movimiento);
   }
 
   @Get()
@@ -18,17 +17,17 @@ export class MovimientoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.movimientoService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMovimientoDto: UpdateMovimientoDto) {
-    return this.movimientoService.update(+id, updateMovimientoDto);
+  update(@Param('id') id: number, @Body() movimiento: Movimiento) {
+    return this.movimientoService.update(+id, movimiento);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.movimientoService.remove(+id);
   }
 }

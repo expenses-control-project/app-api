@@ -1,15 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { GastoService } from './gasto.service';
-import { CreateGastoDto } from './dto/create-gasto.dto';
-import { UpdateGastoDto } from './dto/update-gasto.dto';
+import { Gasto } from './gasto.entity';
 
 @Controller('gasto')
 export class GastoController {
   constructor(private readonly gastoService: GastoService) {}
 
   @Post()
-  create(@Body() createGastoDto: CreateGastoDto) {
-    return this.gastoService.create(createGastoDto);
+  create(@Body() gasto: Gasto) {
+    return this.gastoService.create(gasto);
   }
 
   @Get()
@@ -18,17 +17,17 @@ export class GastoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.gastoService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGastoDto: UpdateGastoDto) {
-    return this.gastoService.update(+id, updateGastoDto);
+  update(@Param('id') id: number, @Body() gasto: Gasto) {
+    return this.gastoService.update(+id, gasto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.gastoService.remove(+id);
   }
 }

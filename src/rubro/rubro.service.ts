@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRubroDto } from './dto/create-rubro.dto';
-import { UpdateRubroDto } from './dto/update-rubro.dto';
+import { Rubro } from './rubro.entity';
 
 @Injectable()
 export class RubroService {
-  create(createRubroDto: CreateRubroDto) {
+  create(rubro: Rubro) {
     return 'This action adds a new rubro';
   }
 
@@ -16,7 +15,7 @@ export class RubroService {
     return `This action returns a #${id} rubro`;
   }
 
-  update(id: number, updateRubroDto: UpdateRubroDto) {
+  update(id: number, rubro: Rubro) {
     return `This action updates a #${id} rubro`;
   }
 

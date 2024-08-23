@@ -1,15 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { IngresoService } from './ingreso.service';
-import { CreateIngresoDto } from './dto/create-ingreso.dto';
-import { UpdateIngresoDto } from './dto/update-ingreso.dto';
+import { Ingreso } from './ingreso.entity';
 
 @Controller('ingreso')
 export class IngresoController {
   constructor(private readonly ingresoService: IngresoService) {}
 
   @Post()
-  create(@Body() createIngresoDto: CreateIngresoDto) {
-    return this.ingresoService.create(createIngresoDto);
+  create(@Body() ingreso: Ingreso) {
+    return this.ingresoService.create(ingreso);
   }
 
   @Get()
@@ -18,17 +17,17 @@ export class IngresoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.ingresoService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateIngresoDto: UpdateIngresoDto) {
-    return this.ingresoService.update(+id, updateIngresoDto);
+  update(@Param('id') id: number, @Body() ingreso: Ingreso) {
+    return this.ingresoService.update(+id, ingreso);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.ingresoService.remove(+id);
   }
 }

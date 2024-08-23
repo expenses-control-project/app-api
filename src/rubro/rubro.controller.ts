@@ -1,15 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { RubroService } from './rubro.service';
-import { CreateRubroDto } from './dto/create-rubro.dto';
-import { UpdateRubroDto } from './dto/update-rubro.dto';
+import { Rubro } from './rubro.entity';
 
 @Controller('rubro')
 export class RubroController {
   constructor(private readonly rubroService: RubroService) {}
 
   @Post()
-  create(@Body() createRubroDto: CreateRubroDto) {
-    return this.rubroService.create(createRubroDto);
+  create(@Body() rubro: Rubro) {
+    return this.rubroService.create(rubro);
   }
 
   @Get()
@@ -18,17 +17,17 @@ export class RubroController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.rubroService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRubroDto: UpdateRubroDto) {
-    return this.rubroService.update(+id, updateRubroDto);
+  update(@Param('id') id: number, @Body() rubro: Rubro) {
+    return this.rubroService.update(+id, rubro);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.rubroService.remove(+id);
   }
 }

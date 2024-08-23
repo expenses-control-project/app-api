@@ -1,15 +1,15 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { EstablecimientoService } from './establecimiento.service';
-import { CreateEstablecimientoDto } from './dto/create-establecimiento.dto';
-import { UpdateEstablecimientoDto } from './dto/update-establecimiento.dto';
+import { Cuenta } from 'src/cuenta/cuenta.entity';
+import { Establecimiento } from './establecimiento.entity';
 
 @Controller('establecimiento')
 export class EstablecimientoController {
   constructor(private readonly establecimientoService: EstablecimientoService) {}
 
   @Post()
-  create(@Body() createEstablecimientoDto: CreateEstablecimientoDto) {
-    return this.establecimientoService.create(createEstablecimientoDto);
+  create(@Body() establecimiento: Establecimiento) {
+    return this.establecimientoService.create(establecimiento);
   }
 
   @Get()
@@ -18,17 +18,17 @@ export class EstablecimientoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.establecimientoService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEstablecimientoDto: UpdateEstablecimientoDto) {
-    return this.establecimientoService.update(+id, updateEstablecimientoDto);
+  update(@Param('id') id: number, @Body() establecimiento: Establecimiento) {
+    return this.establecimientoService.update(+id, establecimiento);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.establecimientoService.remove(+id);
   }
 }
