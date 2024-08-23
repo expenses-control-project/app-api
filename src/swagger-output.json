@@ -1,0 +1,14 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Expenses-control API Documentation",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3002/api/v1"
+    }
+  ],
+  "paths": {}
+}
