@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  idUsuario Int    @id @default(autoincrement())
+  name      String
+  email     String
+  password  String
+}
+
+model Cuenta {
+  idCuenta     Int       @id @default(autoincrement())
+  nombre       String
+  saldo        Float
+  ingresoList  Ingreso[]
+  idGasto      Int?
+  gasto        Gasto?    @relation(fields: [idGasto], references: [idGasto])
+}
+
+model Establecimiento {
+  idEstablecimiento      Int       @id @default(autoincrement())
+  nombreEstablecimiento  String
+  idRubro                Int?
+  rubro                  Rubro?    @relation(fields: [idRubro], references: [idRubro])
+  gastoList              Gasto[]
+}
+
+model Gasto {
+  idGasto          Int             @id @default(autoincrement())
+  monto            Float
+  fecha            DateTime
+  idEstablecimiento Int?
+  establecimiento  Establecimiento? @relation(fields: [idEstablecimiento], references: [idEstablecimiento])
+  cuentaList       Cuenta[]
+  movimientoList   Movimiento[]
+}
+
+model Ingreso {
+  idIngreso      Int     @id @default(autoincrement())
+  saldo          Float
+  idCuenta       Int?
+  cuenta         Cuenta? @relation(fields: [idCuenta], references: [idCuenta])
+  movimientoList Movimiento[]
+}
+
+model Rubro {
+  idRubro             Int               @id @default(autoincrement())
+  nombreRubro         String
+  total               Float
+  establecimientoList Establecimiento[]
+}
+
+model Movimiento {
+  idMovimiento     Int    @id @default(autoincrement())
+  nombreMovimiento String
+  idGasto          Int?
+  idIngreso        Int?
+  esGasto          Boolean
+  esIngreso        Boolean
+  ingreso          Ingreso? @relation(fields: [idIngreso], references: [idIngreso])
+  gasto            Gasto? @relation(fields: [idGasto], references: [idGasto])
+}
+
+
