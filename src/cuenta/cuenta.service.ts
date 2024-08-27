@@ -1,26 +1,28 @@
-import { Injectable } from '@nestjs/common';
-import { Cuenta } from './cuenta.entity';
-
+import {Injectable} from '@nestjs/common';
+import {Cuenta} from './cuenta.entity';
+import {PrismaService} from 'src/config/prisma.service';
 
 @Injectable()
 export class CuentaService {
-  create(cuenta: Cuenta) {
-    return 'This action adds a new cuenta';
-  }
+	constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all cuenta`;
-  }
+	create(cuenta: Cuenta) {
+		return 'This action adds a new cuenta';
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} cuenta`;
-  }
+	findAll(): Promise<Cuenta[]> {
+		return this.prisma.cuentas.findMany();
+	}
 
-  update(id: number, cuenta: Cuenta) {
-    return `This action updates a #${id} cuenta`;
-  }
+	findOne(id: number) {
+		return `This action returns a #${id} cuenta`;
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} cuenta`;
-  }
+	update(id: number, cuenta: Cuenta) {
+		return `This action updates a #${id} cuenta`;
+	}
+
+	remove(id: number) {
+		return `This action removes a #${id} cuenta`;
+	}
 }

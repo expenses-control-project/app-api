@@ -7,64 +7,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
+model Usuarios {
   idUsuario Int    @id @default(autoincrement())
   name      String
   email     String
   password  String
 }
 
-model Cuenta {
+model Cuentas {
   idCuenta     Int       @id @default(autoincrement())
   nombre       String
   saldo        Float
-  ingresoList  Ingreso[]
+  ingresoList  Ingresos[]
   idGasto      Int?
-  gasto        Gasto?    @relation(fields: [idGasto], references: [idGasto])
+  gasto        Gastos?    @relation(fields: [idGasto], references: [idGasto])
 }
 
-model Establecimiento {
+model Establecimientos {
   idEstablecimiento      Int       @id @default(autoincrement())
   nombreEstablecimiento  String
   idRubro                Int?
-  rubro                  Rubro?    @relation(fields: [idRubro], references: [idRubro])
-  gastoList              Gasto[]
+  rubro                  Rubros?    @relation(fields: [idRubro], references: [idRubro])
+  gastoList              Gastos[]
 }
 
-model Gasto {
+model Gastos {
   idGasto          Int             @id @default(autoincrement())
   monto            Float
   fecha            DateTime
   idEstablecimiento Int?
-  establecimiento  Establecimiento? @relation(fields: [idEstablecimiento], references: [idEstablecimiento])
-  cuentaList       Cuenta[]
-  movimientoList   Movimiento[]
+  establecimiento  Establecimientos? @relation(fields: [idEstablecimiento], references: [idEstablecimiento])
+  cuentaList       Cuentas[]
+  movimientoList   Movimientos[]
 }
 
-model Ingreso {
+model Ingresos {
   idIngreso      Int     @id @default(autoincrement())
   saldo          Float
   idCuenta       Int?
-  cuenta         Cuenta? @relation(fields: [idCuenta], references: [idCuenta])
-  movimientoList Movimiento[]
+  cuenta         Cuentas? @relation(fields: [idCuenta], references: [idCuenta])
+  movimientoList Movimientos[]
 }
 
-model Rubro {
+model Rubros {
   idRubro             Int               @id @default(autoincrement())
   nombreRubro         String
   total               Float
-  establecimientoList Establecimiento[]
+  establecimientoList Establecimientos[]
 }
 
-model Movimiento {
+model Movimientos {
   idMovimiento     Int    @id @default(autoincrement())
   nombreMovimiento String
   idGasto          Int?
   idIngreso        Int?
   esGasto          Boolean
   esIngreso        Boolean
-  ingreso          Ingreso? @relation(fields: [idIngreso], references: [idIngreso])
-  gasto            Gasto? @relation(fields: [idGasto], references: [idGasto])
+  ingreso          Ingresos? @relation(fields: [idIngreso], references: [idIngreso])
+  gasto            Gastos? @relation(fields: [idGasto], references: [idGasto])
 }
 
 
