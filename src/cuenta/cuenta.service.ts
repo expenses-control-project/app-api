@@ -6,23 +6,23 @@ import {PrismaService} from 'src/config/prisma.service';
 export class CuentaService {
 	constructor(private prisma: PrismaService) {}
 
-	create(cuenta: Cuenta) {
+	async create(cuenta: Cuenta) {
 		return 'This action adds a new cuenta';
 	}
 
-	findAll(): Promise<Cuenta[]> {
+	async findAll(): Promise<Cuenta[]> {
 		return this.prisma.cuentas.findMany();
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} cuenta`;
+	async findOne(id: number) {
+		return this.prisma.cuentas.findUnique(id);
 	}
 
-	update(id: number, cuenta: Cuenta) {
+	async update(id: number, cuenta: Cuenta) {
 		return `This action updates a #${id} cuenta`;
 	}
 
-	remove(id: number) {
+	async remove(id: number) {
 		return `This action removes a #${id} cuenta`;
 	}
 }
