@@ -1,33 +1,43 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MovimientoService } from './movimiento.service';
-import { Movimiento } from './movimiento.entity';
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+} from '@nestjs/common';
+import {MovimientoService} from './movimiento.service';
+import {Movimiento} from './movimiento.entity';
+import {ApiTags} from '@nestjs/swagger';
 
+@ApiTags('movimiento')
 @Controller('movimiento')
 export class MovimientoController {
-  constructor(private readonly movimientoService: MovimientoService) {}
+	constructor(private readonly movimientoService: MovimientoService) {}
 
-  @Post()
-  create(@Body() movimiento: Movimiento) {
-    return this.movimientoService.create(movimiento);
-  }
+	@Post()
+	create(@Body() movimiento: Movimiento) {
+		return this.movimientoService.create(movimiento);
+	}
 
-  @Get()
-  findAll() {
-    return this.movimientoService.findAll();
-  }
+	@Get()
+	findAll() {
+		return this.movimientoService.findAll();
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.movimientoService.findOne(+id);
-  }
+	@Get(':id')
+	findOne(@Param('id') id: number) {
+		return this.movimientoService.findOne(+id);
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: number, @Body() movimiento: Movimiento) {
-    return this.movimientoService.update(+id, movimiento);
-  }
+	@Patch(':id')
+	update(@Param('id') id: number, @Body() movimiento: Movimiento) {
+		return this.movimientoService.update(+id, movimiento);
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.movimientoService.remove(+id);
-  }
+	@Delete(':id')
+	remove(@Param('id') id: number) {
+		return this.movimientoService.remove(+id);
+	}
 }

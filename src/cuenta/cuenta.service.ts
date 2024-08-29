@@ -15,7 +15,7 @@ export class CuentaService {
 	}
 
 	async findOne(id: number) {
-		return this.prisma.cuentas.findUnique(id);
+		return;
 	}
 
 	async update(id: number, cuenta: Cuenta) {

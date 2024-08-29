@@ -9,7 +9,9 @@ import {
 } from '@nestjs/common';
 import {CuentaService} from './cuenta.service';
 import {Cuenta} from './cuenta.entity';
+import {ApiTags} from '@nestjs/swagger';
 
+@ApiTags('cuenta')
 @Controller('cuenta')
 export class CuentaController {
 	constructor(private readonly cuentaService: CuentaService) {}
