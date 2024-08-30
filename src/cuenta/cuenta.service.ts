@@ -1,25 +1,34 @@
-import {Injectable} from '@nestjs/common';
-import {Cuenta} from './cuenta.entity';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import {PrismaService} from 'src/config/prisma.service';
+import {
+	AllCuentaDto,
+	ByIdCuentaDto,
+	CreateCuentaDto,
+	UpdateCuentaDto,
+} from './cuenta.dto';
 
 @Injectable()
 export class CuentaService {
 	constructor(private prisma: PrismaService) {}
 
-	async create(cuenta: Cuenta) {
-		return 'This action adds a new cuenta';
+	async create(cuenta: CreateCuentaDto): Promise<void> {
+		await this.prisma.cuentas.create({
+			data: {
+				nombre: cuenta.nombre,
+				saldo: cuenta.saldo,
+			},
+		});
 	}
-
-	async findAll(): Promise<Cuenta[]> {
+	async findAll(): Promise<AllCuentaDto[]> {
 		return this.prisma.cuentas.findMany();
 	}
 
-	async findOne(id: number) {
+	async findOne(id: number): Promise<ByIdCuentaDto> {
 		return;
 	}
 
-	async update(id: number, cuenta: Cuenta) {
-		return `This action updates a #${id} cuenta`;
+	async update(id: number, cuenta: UpdateCuentaDto) {
+		return new NotFoundException(`This action updates a #${id} cuenta`);
 	}
 
 	async remove(id: number) {
