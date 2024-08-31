@@ -1,16 +1,20 @@
 import {IsNotEmpty, IsNumber, IsString, MinLength} from 'class-validator';
 
 export class CreateCuentaDto {
-	@IsString()
-	@MinLength(4)
+	@IsString({message: 'El nombre debe ser un string'})
+	@MinLength(4, {message: 'El nombre debe tener al menos 4 caracteres'})
 	nombre: string;
-	@IsNumber()
-	@IsNotEmpty()
+
+	@IsNumber({}, {message: 'El saldo debe ser un número'})
+	@IsNotEmpty({message: 'El saldo no puede estar vacío'})
 	saldo: number;
 }
 export class UpdateCuentaDto {
+	@IsString({message: 'El nombre debe ser un string'})
+	@MinLength(4, {message: 'El nombre debe tener al menos 4 caracteres'})
 	nombre: string;
+
+	@IsNumber({}, {message: 'El saldo debe ser un número'})
+	@IsNotEmpty({message: 'El saldo no puede estar vacío'})
 	saldo: number;
 }
-export class AllCuentaDto {}
-export class ByIdCuentaDto {}

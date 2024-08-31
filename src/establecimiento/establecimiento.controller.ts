@@ -8,7 +8,6 @@ import {
 	Delete,
 } from '@nestjs/common';
 import {EstablecimientoService} from './establecimiento.service';
-import {Cuenta} from 'src/cuenta/cuenta.entity';
 import {Establecimiento} from './establecimiento.entity';
 import {ApiTags} from '@nestjs/swagger';
 
