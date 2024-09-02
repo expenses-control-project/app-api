@@ -6,38 +6,87 @@ import {
 	Patch,
 	Param,
 	Delete,
+	HttpStatus,
+	ParseIntPipe,
 } from '@nestjs/common';
 import {GastoService} from './gasto.service';
-import {Gasto} from './gasto.entity';
-import {ApiTags} from '@nestjs/swagger';
+import {ApiOperation, ApiTags} from '@nestjs/swagger';
+import {CreateGastoDto, UpdateGastoDto} from './gasto.dto';
 
 @ApiTags('gasto')
 @Controller('gasto')
 export class GastoController {
 	constructor(private readonly gastoService: GastoService) {}
 
+	@ApiOperation({
+		summary: 'Crea un gasto ',
+	})
 	@Post()
-	create(@Body() gasto: Gasto) {
-		return this.gastoService.create(gasto);
+	async create(@Body() gastoCreate: CreateGastoDto): Promise<any> {
+		const gasto = await this.gastoService.create(gastoCreate);
+		return {
+			statusCode: HttpStatus.CREATED,
+			timestamp: new Date().toISOString(),
+			message: 'Gasto creado con éxito',
+			gasto: gasto,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Obtiene todos los gastos',
+	})
 	@Get()
-	findAll() {
-		return this.gastoService.findAll();
+	async findAll(): Promise<any> {
+		const gasto: [] = await this.gastoService.findAll();
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Gastos encontrados con éxito',
+			gasto: gasto,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Obtiene gastos por ID',
+	})
 	@Get(':id')
-	findOne(@Param('id') id: number) {
-		return this.gastoService.findOne(+id);
+	async findOne(@Param('id', ParseIntPipe) id: number): Promise<any> {
+		const gasto = await this.gastoService.findOne(id);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Gasto encontrado con éxito',
+			gasto: gasto,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Edita los gastos',
+	})
 	@Patch(':id')
-	update(@Param('id') id: number, @Body() gasto: Gasto) {
-		return this.gastoService.update(+id, gasto);
+	async update(
+		@Param('id', ParseIntPipe) id: number,
+		@Body() gastoUpdate: UpdateGastoDto,
+	): Promise<any> {
+		const gasto = await this.gastoService.update(id, gastoUpdate);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Gasto editado con éxito',
+			gasto: gasto,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Elimina un gasto por ID',
+	})
 	@Delete(':id')
-	remove(@Param('id') id: number) {
-		return this.gastoService.remove(+id);
+	async remove(@Param('id', ParseIntPipe) id: number): Promise<any> {
+		await this.gastoService.remove(id);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Gasto eliminado con éxito',
+		};
 	}
 }

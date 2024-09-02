@@ -19,7 +19,7 @@ export class CuentaController {
 	constructor(private readonly cuentaService: CuentaService) {}
 
 	@ApiOperation({
-		summary: 'Crea un cuenta enviando los datos necesarios por body',
+		summary: 'Crea una cuenta ',
 	})
 	@Post()
 	async create(@Body() cuentaCreate: CreateCuentaDto): Promise<any> {
@@ -45,6 +45,7 @@ export class CuentaController {
 			cuenta: cuenta,
 		};
 	}
+
 	@ApiOperation({
 		summary: 'Obtiene cuentas por ID',
 	})
@@ -58,6 +59,7 @@ export class CuentaController {
 			cuenta: cuenta,
 		};
 	}
+
 	@ApiOperation({
 		summary: 'Edita las cuentas',
 	})
@@ -74,6 +76,7 @@ export class CuentaController {
 			cuenta: cuenta,
 		};
 	}
+
 	@ApiOperation({
 		summary: 'Elimina una cuenta por ID',
 	})

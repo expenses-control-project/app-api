@@ -6,10 +6,15 @@ import {
 	Patch,
 	Param,
 	Delete,
+	HttpStatus,
+	ParseIntPipe,
 } from '@nestjs/common';
 import {EstablecimientoService} from './establecimiento.service';
-import {Establecimiento} from './establecimiento.entity';
-import {ApiTags} from '@nestjs/swagger';
+import {ApiOperation, ApiTags} from '@nestjs/swagger';
+import {
+	CreateEstablecimientoDto,
+	UpdateEstablecimientoDto,
+} from './establecimiento.dto';
 
 @ApiTags('establecimiento')
 @Controller('establecimiento')
@@ -17,29 +22,82 @@ export class EstablecimientoController {
 	constructor(
 		private readonly establecimientoService: EstablecimientoService,
 	) {}
-
+	@ApiOperation({
+		summary: 'Crea un establecimiento',
+	})
 	@Post()
-	create(@Body() establecimiento: Establecimiento) {
-		return this.establecimientoService.create(establecimiento);
+	async create(
+		@Body() establecimientoCreate: CreateEstablecimientoDto,
+	): Promise<any> {
+		const establecimiento = await this.establecimientoService.create(
+			establecimientoCreate,
+		);
+		return {
+			statusCode: HttpStatus.CREATED,
+			timestamp: new Date().toISOString(),
+			message: 'Establecimiento creado con éxito',
+			establecimiento: establecimiento,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Obtiene todos los establecimientos',
+	})
 	@Get()
-	findAll() {
-		return this.establecimientoService.findAll();
+	async findAll(): Promise<any> {
+		const establecimiento: [] = await this.establecimientoService.findAll();
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Establecimientos encontrados con éxito',
+			establecimiento: establecimiento,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Obtiene establecimientos por ID',
+	})
 	@Get(':id')
-	findOne(@Param('id') id: number) {
-		return this.establecimientoService.findOne(+id);
+	async findOne(@Param('id', ParseIntPipe) id: number): Promise<any> {
+		const establecimiento = await this.establecimientoService.findOne(id);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Establecimiento encontrado con éxito',
+			establecimiento: establecimiento,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Edita los establecimientos',
+	})
 	@Patch(':id')
-	update(@Param('id') id: number, @Body() establecimiento: Establecimiento) {
-		return this.establecimientoService.update(+id, establecimiento);
+	async update(
+		@Param('id', ParseIntPipe) id: number,
+		@Body() establecimientoUpdate: UpdateEstablecimientoDto,
+	): Promise<any> {
+		const establecimiento = await this.establecimientoService.update(
+			id,
+			establecimientoUpdate,
+		);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Establecimiento editado con éxito',
+			establecimiento: establecimiento,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Elimina un establecimiento por ID',
+	})
 	@Delete(':id')
-	remove(@Param('id') id: number) {
-		return this.establecimientoService.remove(+id);
+	async remove(@Param('id', ParseIntPipe) id: number): Promise<any> {
+		await this.establecimientoService.remove(id);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Establecimiento eliminado con éxito',
+		};
 	}
 }

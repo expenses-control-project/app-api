@@ -6,38 +6,87 @@ import {
 	Patch,
 	Param,
 	Delete,
+	HttpStatus,
+	ParseIntPipe,
 } from '@nestjs/common';
 import {IngresoService} from './ingreso.service';
-import {Ingreso} from './ingreso.entity';
-import {ApiTags} from '@nestjs/swagger';
+import {ApiOperation, ApiTags} from '@nestjs/swagger';
+import {CreateIngresoDto, UpdateIngresoDto} from './ingreso.dto';
 
 @ApiTags('ingreso')
 @Controller('ingreso')
 export class IngresoController {
 	constructor(private readonly ingresoService: IngresoService) {}
 
+	@ApiOperation({
+		summary: 'Crea un ingreso ',
+	})
 	@Post()
-	create(@Body() ingreso: Ingreso) {
-		return this.ingresoService.create(ingreso);
+	async create(@Body() ingresoCreate: CreateIngresoDto): Promise<any> {
+		const ingreso = await this.ingresoService.create(ingresoCreate);
+		return {
+			statusCode: HttpStatus.CREATED,
+			timestamp: new Date().toISOString(),
+			message: 'Ingreso creado con éxito',
+			ingreso: ingreso,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Obtiene todos los ingresos',
+	})
 	@Get()
-	findAll() {
-		return this.ingresoService.findAll();
+	async findAll(): Promise<any> {
+		const ingreso: [] = await this.ingresoService.findAll();
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Ingresos encontrados con éxito',
+			ingreso: ingreso,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Obtiene ingresos por ID',
+	})
 	@Get(':id')
-	findOne(@Param('id') id: number) {
-		return this.ingresoService.findOne(+id);
+	async findOne(@Param('id', ParseIntPipe) id: number): Promise<any> {
+		const ingreso = await this.ingresoService.findOne(id);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Ingreso encontrado con éxito',
+			ingreso: ingreso,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Edita las cuentas',
+	})
 	@Patch(':id')
-	update(@Param('id') id: number, @Body() ingreso: Ingreso) {
-		return this.ingresoService.update(+id, ingreso);
+	async update(
+		@Param('id', ParseIntPipe) id: number,
+		@Body() ingresoUpdate: UpdateIngresoDto,
+	): Promise<any> {
+		const ingreso = await this.ingresoService.update(id, ingresoUpdate);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Ingreso editado con éxito',
+			ingreso: ingreso,
+		};
 	}
 
+	@ApiOperation({
+		summary: 'Elimina un ingreso por ID',
+	})
 	@Delete(':id')
-	remove(@Param('id') id: number) {
-		return this.ingresoService.remove(+id);
+	async remove(@Param('id', ParseIntPipe) id: number): Promise<any> {
+		await this.ingresoService.remove(id);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Ingreso eliminado con éxito',
+		};
 	}
 }

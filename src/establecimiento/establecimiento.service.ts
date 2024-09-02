@@ -1,26 +1,85 @@
-import { Injectable } from '@nestjs/common';
-import { Establecimiento } from './establecimiento.entity';
-
+import {Injectable, NotFoundException} from '@nestjs/common';
+import {
+	CreateEstablecimientoDto,
+	UpdateEstablecimientoDto,
+} from './establecimiento.dto';
+import {PrismaService} from 'src/config/prisma.service';
 
 @Injectable()
 export class EstablecimientoService {
-  create(establecimiento: Establecimiento) {
-    return 'This action adds a new establecimiento';
-  }
+	constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all establecimiento`;
-  }
+	async create(
+		establecimientoCreate: CreateEstablecimientoDto,
+	): Promise<any> {
+		try {
+			return await this.prisma.establecimientos.create({
+				data: {
+					nombreEstablecimiento:
+						establecimientoCreate.nombreEstablecimiento,
+					rubro: {
+						connect: {idRubro: establecimientoCreate.rubroId},
+					},
+				},
+			});
+		} catch (error) {
+			throw new NotFoundException(`No se pudo crear el establecimiento`);
+		}
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} establecimiento`;
-  }
+	async findAll(): Promise<any> {
+		try {
+			return await this.prisma.establecimientos.findMany();
+		} catch (error) {
+			return new NotFoundException(`No se encontraron establecimientos`);
+		}
+	}
 
-  update(id: number, establecimiento: Establecimiento) {
-    return `This action updates a #${id} establecimiento`;
-  }
+	async findOne(id: number): Promise<any> {
+		const establecimiento = await this.prisma.establecimientos.findUnique({
+			where: {idEstablecimiento: id},
+		});
 
-  remove(id: number) {
-    return `This action removes a #${id} establecimiento`;
-  }
+		if (!establecimiento) {
+			throw new NotFoundException(
+				`No se encontró el establecimiento con el id: ${id}`,
+			);
+		}
+
+		return establecimiento;
+	}
+
+	async update(
+		id: number,
+		establecimientoUpdate: UpdateEstablecimientoDto,
+	): Promise<any> {
+		try {
+			return await this.prisma.establecimientos.update({
+				where: {idEstablecimiento: id},
+				data: {
+					nombreEstablecimiento:
+						establecimientoUpdate.nombreEstablecimiento,
+					rubro: {
+						connect: {idRubro: establecimientoUpdate.rubroId},
+					},
+				},
+			});
+		} catch (error) {
+			throw new NotFoundException(
+				`No se puede actualizar el establecimiento con el id: ${id}`,
+			);
+		}
+	}
+
+	async remove(id: number): Promise<any> {
+		try {
+			return await this.prisma.establecimientos.delete({
+				where: {idEstablecimiento: id},
+			});
+		} catch (error) {
+			throw new NotFoundException(
+				`No se puede eliminar el establecimiento con el id: ${id}`,
+			);
+		}
+	}
 }

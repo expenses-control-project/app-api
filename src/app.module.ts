@@ -5,6 +5,7 @@ import {RubroModule} from './rubro/rubro.module';
 import {IngresoModule} from './ingreso/ingreso.module';
 import {GastoModule} from './gasto/gasto.module';
 import {EstablecimientoModule} from './establecimiento/establecimiento.module';
+import {PrismaModule} from './config/prisma.module';
 
 @Module({
 	imports: [
@@ -14,6 +15,8 @@ import {EstablecimientoModule} from './establecimiento/establecimiento.module';
 		IngresoModule,
 		GastoModule,
 		EstablecimientoModule,
+		PrismaModule,
 	],
+	providers: [],
 })
 export class AppModule {}

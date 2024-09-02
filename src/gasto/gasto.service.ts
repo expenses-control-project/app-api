@@ -1,25 +1,77 @@
-import { Injectable } from '@nestjs/common';
-import { Gasto } from './gasto.entity';
+import {Injectable, NotFoundException} from '@nestjs/common';
+import {CreateGastoDto, UpdateGastoDto} from './gasto.dto';
+import {PrismaService} from 'src/config/prisma.service';
 
 @Injectable()
 export class GastoService {
-  create(gasto: Gasto) {
-    return 'This action adds a new gasto';
-  }
+	constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all gasto`;
-  }
+	async create(gasto: CreateGastoDto): Promise<any> {
+		try {
+			return await this.prisma.gastos.create({
+				data: {
+					monto: gasto.monto,
+					fecha: gasto.fecha,
+					establecimiento: {
+						connect: {idEstablecimiento: gasto.establecimientoId},
+					},
+				},
+			});
+		} catch (error) {
+			throw new NotFoundException(`No se pudo crear el gasto`);
+		}
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} gasto`;
-  }
+	async findAll(): Promise<any> {
+		try {
+			return await this.prisma.gastos.findMany();
+		} catch (error) {
+			return new NotFoundException(`No se encontraron gastos`);
+		}
+	}
 
-  update(id: number, gasto: Gasto) {
-    return `This action updates a #${id} gasto`;
-  }
+	async findOne(id: number): Promise<any> {
+		const gasto = await this.prisma.gastos.findUnique({
+			where: {idGasto: id},
+		});
 
-  remove(id: number) {
-    return `This action removes a #${id} gasto`;
-  }
+		if (!gasto) {
+			throw new NotFoundException(
+				`No se encontró el gasto con el id: ${id}`,
+			);
+		}
+
+		return gasto;
+	}
+
+	async update(id: number, gasto: UpdateGastoDto): Promise<any> {
+		try {
+			return await this.prisma.gastos.update({
+				where: {idGasto: id},
+				data: {
+					monto: gasto.monto,
+					fecha: gasto.fecha,
+					establecimiento: {
+						connect: {idEstablecimiento: gasto.establecimientoId},
+					},
+				},
+			});
+		} catch (error) {
+			throw new NotFoundException(
+				`No se puede actualizar el gasto con el id: ${id}`,
+			);
+		}
+	}
+
+	async remove(id: number): Promise<any> {
+		try {
+			return await this.prisma.gastos.delete({
+				where: {idGasto: id},
+			});
+		} catch (error) {
+			throw new NotFoundException(
+				`No se puede eliminar el gasto con el id: ${id}`,
+			);
+		}
+	}
 }

@@ -21,8 +21,11 @@ async function bootstrap() {
 			whitelist: true,
 		}),
 	);
+
 	app.setGlobalPrefix('api');
+
 	app.enableCors();
+
 	await app.listen(PORT);
 }
 bootstrap();
