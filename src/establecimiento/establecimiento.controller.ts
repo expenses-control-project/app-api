@@ -73,11 +73,9 @@ export class EstablecimientoController {
 	})
 	@Patch(':id')
 	async update(
-		@Param('id', ParseIntPipe) id: number,
 		@Body() establecimientoUpdate: UpdateEstablecimientoDto,
 	): Promise<any> {
 		const establecimiento = await this.establecimientoService.update(
-			id,
 			establecimientoUpdate,
 		);
 		return {

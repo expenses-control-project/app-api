@@ -64,11 +64,8 @@ export class CuentaController {
 		summary: 'Edita las cuentas',
 	})
 	@Patch(':id')
-	async update(
-		@Param('id', ParseIntPipe) id: number,
-		@Body() cuentaUpdate: UpdateCuentaDto,
-	): Promise<any> {
-		const cuenta = await this.cuentaService.update(id, cuentaUpdate);
+	async update(@Body() cuentaUpdate: UpdateCuentaDto): Promise<any> {
+		const cuenta = await this.cuentaService.update(cuentaUpdate);
 		return {
 			statusCode: HttpStatus.OK,
 			timestamp: new Date().toISOString(),

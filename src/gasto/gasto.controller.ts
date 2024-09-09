@@ -19,16 +19,21 @@ export class GastoController {
 	constructor(private readonly gastoService: GastoService) {}
 
 	@ApiOperation({
-		summary: 'Crea un gasto ',
+		summary: 'Crea un gasto y debita de las cuentas correspondientes',
 	})
 	@Post()
 	async create(@Body() gastoCreate: CreateGastoDto): Promise<any> {
 		const gasto = await this.gastoService.create(gastoCreate);
+
+		// Debita de todas las cuentas asociadas
+		const cuentas = await this.gastoService.debit(gastoCreate);
+
 		return {
 			statusCode: HttpStatus.CREATED,
 			timestamp: new Date().toISOString(),
-			message: 'Gasto creado con éxito',
+			message: 'Gasto creado y debitado de cuentas con éxito',
 			gasto: gasto,
+			cuentas: cuentas,
 		};
 	}
 
@@ -64,11 +69,8 @@ export class GastoController {
 		summary: 'Edita los gastos',
 	})
 	@Patch(':id')
-	async update(
-		@Param('id', ParseIntPipe) id: number,
-		@Body() gastoUpdate: UpdateGastoDto,
-	): Promise<any> {
-		const gasto = await this.gastoService.update(id, gastoUpdate);
+	async update(@Body() gastoUpdate: UpdateGastoDto): Promise<any> {
+		const gasto = await this.gastoService.update(gastoUpdate);
 		return {
 			statusCode: HttpStatus.OK,
 			timestamp: new Date().toISOString(),

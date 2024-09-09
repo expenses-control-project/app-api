@@ -12,9 +12,7 @@ export class CuentaService {
 				data: {
 					nombre: cuentaCreate.nombre,
 					saldo: cuentaCreate.saldo,
-					gasto: {
-						connect: {idGasto: cuentaCreate.gastoId},
-					},
+					descripcion: cuentaCreate.descripcion || undefined,
 				},
 			});
 		} catch (error) {
@@ -26,7 +24,7 @@ export class CuentaService {
 		try {
 			return await this.prisma.cuentas.findMany();
 		} catch (error) {
-			return new NotFoundException(`No se encontraron cuentas`);
+			throw new NotFoundException(`No se encontraron cuentas`);
 		}
 	}
 
@@ -44,21 +42,19 @@ export class CuentaService {
 		return cuenta;
 	}
 
-	async update(id: number, cuentaUpdate: UpdateCuentaDto): Promise<any> {
+	async update(cuentaUpdate: UpdateCuentaDto): Promise<any> {
 		try {
 			return await this.prisma.cuentas.update({
-				where: {idCuenta: id},
+				where: {idCuenta: cuentaUpdate.idCuenta},
 				data: {
-					nombre: cuentaUpdate.nombre,
-					saldo: cuentaUpdate.saldo,
-					gasto: {
-						connect: {idGasto: cuentaUpdate.gastoId},
-					},
+					nombre: cuentaUpdate.nombre || undefined,
+					saldo: cuentaUpdate.saldo || undefined,
+					descripcion: cuentaUpdate.descripcion || undefined,
 				},
 			});
 		} catch (error) {
 			throw new NotFoundException(
-				`No se puede actualizar la cuenta con el id: ${id}`,
+				`No se puede actualizar la cuenta con el id: ${cuentaUpdate.idCuenta}`,
 			);
 		}
 	}

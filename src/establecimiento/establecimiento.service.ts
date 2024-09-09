@@ -31,7 +31,7 @@ export class EstablecimientoService {
 		try {
 			return await this.prisma.establecimientos.findMany();
 		} catch (error) {
-			return new NotFoundException(`No se encontraron establecimientos`);
+			throw new NotFoundException(`No se encontraron establecimientos`);
 		}
 	}
 
@@ -50,23 +50,29 @@ export class EstablecimientoService {
 	}
 
 	async update(
-		id: number,
 		establecimientoUpdate: UpdateEstablecimientoDto,
 	): Promise<any> {
 		try {
 			return await this.prisma.establecimientos.update({
-				where: {idEstablecimiento: id},
+				where: {
+					idEstablecimiento: establecimientoUpdate.idEstablecimiento,
+				},
 				data: {
 					nombreEstablecimiento:
-						establecimientoUpdate.nombreEstablecimiento,
-					rubro: {
-						connect: {idRubro: establecimientoUpdate.rubroId},
-					},
+						establecimientoUpdate.nombreEstablecimiento ||
+						undefined,
+					rubro: establecimientoUpdate.rubroId
+						? {
+								connect: {
+									idRubro: establecimientoUpdate.rubroId,
+								},
+							}
+						: undefined,
 				},
 			});
 		} catch (error) {
 			throw new NotFoundException(
-				`No se puede actualizar el establecimiento con el id: ${id}`,
+				`No se puede actualizar el establecimiento con el id: ${establecimientoUpdate.idEstablecimiento}`,
 			);
 		}
 	}

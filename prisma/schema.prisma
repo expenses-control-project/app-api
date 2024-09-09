@@ -17,54 +17,54 @@ model Usuarios {
 model Cuentas {
   idCuenta     Int       @id @default(autoincrement())
   nombre       String
+  descripcion  String
   saldo        Float
   ingresoList  Ingresos[]
-  idGasto      Int?
-  gasto        Gastos?    @relation(fields: [idGasto], references: [idGasto])
+  gastoCuenta  GastosCuentas[] // Relación con la tabla asociativa de Gastos
 }
 
 model Establecimientos {
   idEstablecimiento      Int       @id @default(autoincrement())
   nombreEstablecimiento  String
-  idRubro                Int?
-  rubro                  Rubros?    @relation(fields: [idRubro], references: [idRubro])
+  idRubro                Int
+  rubro                  Rubros    @relation(fields: [idRubro], references: [idRubro])
   gastoList              Gastos[]
 }
 
 model Gastos {
-  idGasto          Int             @id @default(autoincrement())
-  monto            Float
-  fecha            DateTime
-  idEstablecimiento Int?
-  establecimiento  Establecimientos? @relation(fields: [idEstablecimiento], references: [idEstablecimiento])
-  cuentaList       Cuentas[]
-  movimientoList   Movimientos[]
+  idGasto           Int                @id @default(autoincrement())
+  descripcion       String
+  monto             Float
+  fecha             DateTime
+  idEstablecimiento Int
+  establecimiento   Establecimientos    @relation(fields: [idEstablecimiento], references: [idEstablecimiento])
+  cuentaList        GastosCuentas[]     // Relación con la tabla asociativa con Cuentas
+}
+
+model GastosCuentas {                   // Tabla asociativa para la relación Gastos <-> Cuentas
+  idGasto    Int
+  idCuenta   Int
+  gasto      Gastos   @relation(fields: [idGasto], references: [idGasto])
+  cuenta     Cuentas  @relation(fields: [idCuenta], references: [idCuenta])
+
+  @@id([idGasto, idCuenta])              // Llave primaria compuesta
 }
 
 model Ingresos {
   idIngreso      Int     @id @default(autoincrement())
   saldo          Float
-  idCuenta       Int?
-  cuenta         Cuentas? @relation(fields: [idCuenta], references: [idCuenta])
-  movimientoList Movimientos[]
+  fecha          DateTime
+  idCuenta       Int
+  cuenta         Cuentas @relation(fields: [idCuenta], references: [idCuenta])
 }
 
 model Rubros {
   idRubro             Int               @id @default(autoincrement())
   nombreRubro         String
-  total               Float
   establecimientoList Establecimientos[]
 }
 
-model Movimientos {
-  idMovimiento     Int    @id @default(autoincrement())
-  nombreMovimiento String
-  idGasto          Int?
-  idIngreso        Int?
-  esGasto          Boolean
-  esIngreso        Boolean
-  ingreso          Ingresos? @relation(fields: [idIngreso], references: [idIngreso])
-  gasto            Gastos? @relation(fields: [idGasto], references: [idGasto])
-}
+
+
 
 

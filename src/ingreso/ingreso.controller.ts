@@ -24,11 +24,13 @@ export class IngresoController {
 	@Post()
 	async create(@Body() ingresoCreate: CreateIngresoDto): Promise<any> {
 		const ingreso = await this.ingresoService.create(ingresoCreate);
+		const cuentaAdd = await this.ingresoService.add(ingreso);
 		return {
 			statusCode: HttpStatus.CREATED,
 			timestamp: new Date().toISOString(),
 			message: 'Ingreso creado con éxito',
 			ingreso: ingreso,
+			cuenta: cuentaAdd,
 		};
 	}
 
@@ -64,11 +66,8 @@ export class IngresoController {
 		summary: 'Edita las cuentas',
 	})
 	@Patch(':id')
-	async update(
-		@Param('id', ParseIntPipe) id: number,
-		@Body() ingresoUpdate: UpdateIngresoDto,
-	): Promise<any> {
-		const ingreso = await this.ingresoService.update(id, ingresoUpdate);
+	async update(@Body() ingresoUpdate: UpdateIngresoDto): Promise<any> {
+		const ingreso = await this.ingresoService.update(ingresoUpdate);
 		return {
 			statusCode: HttpStatus.OK,
 			timestamp: new Date().toISOString(),

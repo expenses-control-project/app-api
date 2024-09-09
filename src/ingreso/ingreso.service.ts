@@ -1,4 +1,8 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import {PrismaService} from 'src/config/prisma.service';
 import {CreateIngresoDto, UpdateIngresoDto} from './ingreso.dto';
 
@@ -11,6 +15,7 @@ export class IngresoService {
 			return await this.prisma.ingresos.create({
 				data: {
 					saldo: ingresoCreate.saldo,
+					fecha: ingresoCreate.fecha,
 					cuenta: {
 						connect: {idCuenta: ingresoCreate.cuentaId},
 					},
@@ -27,7 +32,7 @@ export class IngresoService {
 		try {
 			return await this.prisma.ingresos.findMany();
 		} catch (error) {
-			return new NotFoundException(`No se encontraron ingresos`);
+			throw new NotFoundException(`No se encontraron ingresos`);
 		}
 	}
 
@@ -45,20 +50,23 @@ export class IngresoService {
 		return ingreso;
 	}
 
-	async update(id: number, ingresoUpdate: UpdateIngresoDto): Promise<any> {
+	async update(ingresoUpdate: UpdateIngresoDto): Promise<any> {
 		try {
 			return await this.prisma.ingresos.update({
-				where: {idIngreso: id},
+				where: {idIngreso: ingresoUpdate.idIngreso},
 				data: {
-					saldo: ingresoUpdate.saldo,
-					cuenta: {
-						connect: {idCuenta: ingresoUpdate.cuentaId},
-					},
+					saldo: ingresoUpdate.saldo || undefined,
+					fecha: ingresoUpdate.fecha || undefined,
+					cuenta: ingresoUpdate.cuentaId
+						? {
+								connect: {idCuenta: ingresoUpdate.cuentaId},
+							}
+						: undefined,
 				},
 			});
 		} catch (error) {
 			throw new NotFoundException(
-				`No se puede actualizar el ingreso con el id: ${id}`,
+				`No se puede actualizar el ingreso con el id: ${ingresoUpdate.idIngreso}`,
 			);
 		}
 	}
@@ -71,6 +79,34 @@ export class IngresoService {
 		} catch (error) {
 			throw new NotFoundException(
 				`No se puede eliminar el ingreso con el id: ${id}`,
+			);
+		}
+	}
+
+	async add(ingresoCreate: CreateIngresoDto): Promise<any> {
+		try {
+			// Busca la cuenta por ID y verifica si existe
+			const cuenta = await this.prisma.cuentas.findUnique({
+				where: {idCuenta: ingresoCreate.cuentaId},
+			});
+
+			if (!cuenta) {
+				throw new NotFoundException(
+					`No se encontró la cuenta con el id: ${ingresoCreate.cuentaId}`,
+				);
+			}
+
+			const nuevoSaldo = (cuenta.saldo += ingresoCreate.saldo);
+
+			// Actualiza el saldo nuevo de la cuenta en la base de datos
+			const cuentaActualizada = await this.prisma.cuentas.update({
+				where: {idCuenta: ingresoCreate.cuentaId},
+				data: {saldo: nuevoSaldo},
+			});
+			return cuentaActualizada;
+		} catch (error) {
+			throw new NotFoundException(
+				`No se puede debitar de la cuenta con el id: ${ingresoCreate.cuentaId}`,
 			);
 		}
 	}

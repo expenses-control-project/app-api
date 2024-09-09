@@ -4,8 +4,8 @@ import {CuentaController} from './cuenta.controller';
 import {PrismaModule} from 'src/config/prisma.module';
 
 @Module({
+	imports: [PrismaModule],
 	controllers: [CuentaController],
 	providers: [CuentaService],
-	imports: [PrismaModule],
 })
 export class CuentaModule {}
