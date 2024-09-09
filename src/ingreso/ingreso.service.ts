@@ -29,11 +29,13 @@ export class IngresoService {
 	}
 
 	async findAll(): Promise<any> {
-		try {
-			return await this.prisma.ingresos.findMany();
-		} catch (error) {
+		const ingresos = await this.prisma.ingresos.findMany();
+
+		if (ingresos.length === 0) {
 			throw new NotFoundException(`No se encontraron ingresos`);
 		}
+
+		return ingresos;
 	}
 
 	async findOne(id: number): Promise<any> {

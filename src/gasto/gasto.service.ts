@@ -43,21 +43,19 @@ export class GastoService {
 	}
 
 	async findAll(): Promise<any> {
-		try {
-			return await this.prisma.gastos.findMany({
-				include: {
-					cuentaList: {
-						include: {
-							cuenta: true, // Incluye las cuentas asociadas
-						},
+		const gastos = await this.prisma.gastos.findMany({
+			include: {
+				cuentaList: {
+					include: {
+						cuenta: true, // Incluye las cuentas asociadas
 					},
 				},
-			});
-		} catch (error) {
-			throw new NotFoundException(
-				'No se encontraron relaciones entre cuentas y gastos',
-			);
+			},
+		});
+		if (gastos.length === 0) {
+			throw new NotFoundException('No se encontraron gastos');
 		}
+		return gastos;
 	}
 
 	async findOne(id: number): Promise<any> {

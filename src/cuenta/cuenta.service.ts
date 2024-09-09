@@ -21,11 +21,12 @@ export class CuentaService {
 	}
 
 	async findAll(): Promise<any> {
-		try {
-			return await this.prisma.cuentas.findMany();
-		} catch (error) {
+		const cuentas = await this.prisma.cuentas.findMany();
+
+		if (cuentas.length === 0) {
 			throw new NotFoundException(`No se encontraron cuentas`);
 		}
+		return cuentas;
 	}
 
 	async findOne(id: number): Promise<any> {

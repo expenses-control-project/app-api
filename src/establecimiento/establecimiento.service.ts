@@ -28,11 +28,13 @@ export class EstablecimientoService {
 	}
 
 	async findAll(): Promise<any> {
-		try {
-			return await this.prisma.establecimientos.findMany();
-		} catch (error) {
+		const establecimientos = await this.prisma.ingresos.findMany();
+
+		if (establecimientos.length === 0) {
 			throw new NotFoundException(`No se encontraron establecimientos`);
 		}
+
+		return establecimientos;
 	}
 
 	async findOne(id: number): Promise<any> {
