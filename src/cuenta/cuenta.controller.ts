@@ -63,7 +63,7 @@ export class CuentaController {
 	@ApiOperation({
 		summary: 'Edita las cuentas',
 	})
-	@Patch(':id')
+	@Patch()
 	async update(@Body() cuentaUpdate: UpdateCuentaDto): Promise<any> {
 		const cuenta = await this.cuentaService.update(cuentaUpdate);
 		return {

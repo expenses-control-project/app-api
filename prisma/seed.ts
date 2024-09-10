@@ -5,9 +5,16 @@ const prisma = new PrismaClient();
 
 async function main() {
 	const rubros = [
-		{nombreRubro: 'Alimentación'},
-		{nombreRubro: 'Transporte'},
-		{nombreRubro: 'Entretenimiento'},
+		{nombreRubro: 'Alimentación y Bebidas'},
+		{nombreRubro: 'Moda y Textil'},
+		{nombreRubro: 'Tecnología y Electrónica'},
+		{nombreRubro: 'Salud y Bienestar'},
+		{nombreRubro: 'Construcción e Inmobiliaria'},
+		{nombreRubro: 'Transporte y Logística'},
+		{nombreRubro: 'Educación y Capacitación'},
+		{nombreRubro: 'Automotriz'},
+		{nombreRubro: 'Entretenimiento y Ocio'},
+		{nombreRubro: 'Turismo y Hotelería'},
 	];
 
 	for (const rubro of rubros) {

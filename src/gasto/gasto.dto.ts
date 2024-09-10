@@ -1,6 +1,7 @@
-import {Type} from 'class-transformer';
+import {Transform, Type} from 'class-transformer';
 import {
 	IsDate,
+	IsDateString,
 	IsNotEmpty,
 	IsNumber,
 	IsOptional,
@@ -13,9 +14,9 @@ export class CreateGastoDto {
 	@IsNotEmpty({message: 'El monto no puede estar vacío'})
 	monto: number;
 
-	@IsDate({message: 'La fecha debe ser tipo date'})
+	@IsDateString()
 	@IsNotEmpty({message: 'La fecha no puede estar vacía'})
-	fecha: Date;
+	fecha: string;
 
 	@IsString({message: 'La descripción debe ser un string'})
 	@IsOptional()
@@ -23,12 +24,12 @@ export class CreateGastoDto {
 
 	@IsNumber({}, {message: 'El ID del establecimiento debe ser un número'})
 	@IsNotEmpty({message: 'El establecimiento no puede estar vacío'})
-	establecimientoId: number;
+	idEstablecimiento: number;
 
-	@ValidateNested({each: true})
 	@Type(() => Number)
 	@IsNumber({}, {each: true, message: 'Cada ID de cuenta debe ser un número'})
-	cuentasIds: number[]; // Array de IDs de cuentas a debitar
+	@Transform(({value}) => (typeof value === 'number' ? [value] : value)) // Convertir a array solo si es un número
+	idsCuentas: number[]; // Array de IDs de cuentas a debitar
 }
 export class UpdateGastoDto {
 	@IsNumber({}, {message: 'El idGasto debe ser un número'})
@@ -40,18 +41,16 @@ export class UpdateGastoDto {
 	@IsOptional()
 	monto: number;
 
-	@IsDate({message: 'La fecha debe ser tipo date'})
+	@IsDateString()
 	@IsNotEmpty({message: 'La fecha no puede estar vacía'})
-	@IsOptional()
-	fecha: Date;
+	fecha: string;
 
 	@IsNumber({}, {message: 'El ID del establecimiento debe ser un número'})
 	@IsNotEmpty({message: 'El establecimiento no puede estar vacío'})
-	@IsOptional()
-	establecimientoId: number;
+	idEstablecimiento: number;
 
-	@ValidateNested({each: true})
 	@Type(() => Number)
 	@IsNumber({}, {each: true, message: 'Cada ID de cuenta debe ser un número'})
-	cuentasIds: number[]; // Array de IDs de cuentas a debitar
+	@Transform(({value}) => (typeof value === 'number' ? [value] : value)) // Convertir a array solo si es un número
+	idsCuentas: number[]; // Array de IDs de cuentas a debitar
 }

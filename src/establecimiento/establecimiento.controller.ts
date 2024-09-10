@@ -71,7 +71,7 @@ export class EstablecimientoController {
 	@ApiOperation({
 		summary: 'Edita los establecimientos',
 	})
-	@Patch(':id')
+	@Patch()
 	async update(
 		@Body() establecimientoUpdate: UpdateEstablecimientoDto,
 	): Promise<any> {

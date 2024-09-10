@@ -15,9 +15,9 @@ export class IngresoService {
 			return await this.prisma.ingresos.create({
 				data: {
 					saldo: ingresoCreate.saldo,
-					fecha: ingresoCreate.fecha,
+					fecha: new Date(ingresoCreate.fecha),
 					cuenta: {
-						connect: {idCuenta: ingresoCreate.cuentaId},
+						connect: {idCuenta: ingresoCreate.idCuenta},
 					},
 				},
 			});
@@ -54,18 +54,42 @@ export class IngresoService {
 
 	async update(ingresoUpdate: UpdateIngresoDto): Promise<any> {
 		try {
-			return await this.prisma.ingresos.update({
+			// Obtener el ingreso actual
+			const ingresoActual = await this.prisma.ingresos.findUnique({
+				where: {idIngreso: ingresoUpdate.idIngreso},
+				include: {cuenta: true}, // cuente asociada al ingreso
+			});
+
+			if (!ingresoActual) {
+				throw new NotFoundException(
+					`No se encontró el ingreso con el id: ${ingresoUpdate.idIngreso}`,
+				);
+			}
+
+			// Ajusta la diferencia de saldo
+			const diferenciaSaldo = ingresoUpdate.saldo - ingresoActual.saldo;
+
+			// Actualizar el saldo de la cuenta sumando la diferencia
+			const cuentaActualizada = await this.prisma.cuentas.update({
+				where: {idCuenta: ingresoActual.idCuenta},
+				data: {saldo: ingresoActual.saldo + diferenciaSaldo},
+			});
+
+			// Actualizar el ingreso con los nuevos datos
+			const ingresoActualizado = await this.prisma.ingresos.update({
 				where: {idIngreso: ingresoUpdate.idIngreso},
 				data: {
-					saldo: ingresoUpdate.saldo || undefined,
-					fecha: ingresoUpdate.fecha || undefined,
-					cuenta: ingresoUpdate.cuentaId
-						? {
-								connect: {idCuenta: ingresoUpdate.cuentaId},
-							}
+					saldo: cuentaActualizada.saldo,
+					fecha: ingresoUpdate.fecha
+						? new Date(ingresoUpdate.fecha)
+						: ingresoActual.fecha,
+					cuenta: ingresoUpdate.idCuenta
+						? {connect: {idCuenta: ingresoUpdate.idCuenta}}
 						: undefined,
 				},
 			});
+
+			return {ingreso: ingresoActualizado, cuentaActualizada};
 		} catch (error) {
 			throw new NotFoundException(
 				`No se puede actualizar el ingreso con el id: ${ingresoUpdate.idIngreso}`,
@@ -89,12 +113,12 @@ export class IngresoService {
 		try {
 			// Busca la cuenta por ID y verifica si existe
 			const cuenta = await this.prisma.cuentas.findUnique({
-				where: {idCuenta: ingresoCreate.cuentaId},
+				where: {idCuenta: ingresoCreate.idCuenta},
 			});
 
 			if (!cuenta) {
 				throw new NotFoundException(
-					`No se encontró la cuenta con el id: ${ingresoCreate.cuentaId}`,
+					`No se encontró la cuenta con el id: ${ingresoCreate.idCuenta}`,
 				);
 			}
 
@@ -102,13 +126,13 @@ export class IngresoService {
 
 			// Actualiza el saldo nuevo de la cuenta en la base de datos
 			const cuentaActualizada = await this.prisma.cuentas.update({
-				where: {idCuenta: ingresoCreate.cuentaId},
+				where: {idCuenta: ingresoCreate.idCuenta},
 				data: {saldo: nuevoSaldo},
 			});
 			return cuentaActualizada;
 		} catch (error) {
 			throw new NotFoundException(
-				`No se puede debitar de la cuenta con el id: ${ingresoCreate.cuentaId}`,
+				`No se puede debitar de la cuenta con el id: ${ingresoCreate.idCuenta}`,
 			);
 		}
 	}

@@ -63,16 +63,18 @@ export class IngresoController {
 	}
 
 	@ApiOperation({
-		summary: 'Edita las cuentas',
+		summary: 'Edita los ingresos',
 	})
-	@Patch(':id')
+	@Patch()
 	async update(@Body() ingresoUpdate: UpdateIngresoDto): Promise<any> {
-		const ingreso = await this.ingresoService.update(ingresoUpdate);
+		const {ingreso, cuentaActualizada} =
+			await this.ingresoService.update(ingresoUpdate);
 		return {
 			statusCode: HttpStatus.OK,
 			timestamp: new Date().toISOString(),
 			message: 'Ingreso editado con éxito',
 			ingreso: ingreso,
+			cuenta: cuentaActualizada,
 		};
 	}
 

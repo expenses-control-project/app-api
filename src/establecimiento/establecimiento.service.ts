@@ -1,9 +1,14 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import {
 	CreateEstablecimientoDto,
 	UpdateEstablecimientoDto,
 } from './establecimiento.dto';
 import {PrismaService} from 'src/config/prisma.service';
+import {PrismaClientKnownRequestError} from '@prisma/client/runtime/library';
 
 @Injectable()
 export class EstablecimientoService {
@@ -23,12 +28,23 @@ export class EstablecimientoService {
 				},
 			});
 		} catch (error) {
-			throw new NotFoundException(`No se pudo crear el establecimiento`);
+			if (
+				error instanceof PrismaClientKnownRequestError &&
+				error.code === 'P2002'
+			) {
+				throw new BadRequestException(
+					'El nombre del establecimiento ya existe.',
+				);
+			} else {
+				throw new NotFoundException(
+					`No se pudo crear el establecimiento`,
+				);
+			}
 		}
 	}
 
 	async findAll(): Promise<any> {
-		const establecimientos = await this.prisma.ingresos.findMany();
+		const establecimientos = await this.prisma.establecimientos.findMany();
 
 		if (establecimientos.length === 0) {
 			throw new NotFoundException(`No se encontraron establecimientos`);

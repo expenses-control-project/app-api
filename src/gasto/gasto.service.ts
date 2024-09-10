@@ -2,6 +2,7 @@ import {
 	BadRequestException,
 	Injectable,
 	NotFoundException,
+	NotImplementedException,
 } from '@nestjs/common';
 import {CreateGastoDto, UpdateGastoDto} from './gasto.dto';
 import {PrismaService} from 'src/config/prisma.service';
@@ -12,33 +13,74 @@ export class GastoService {
 
 	async create(gastoCreate: CreateGastoDto): Promise<any> {
 		try {
-			// Crea el gasto
-			const nuevoGasto = await this.prisma.gastos.create({
-				data: {
-					monto: gastoCreate.monto,
-					fecha: gastoCreate.fecha,
-					descripcion: gastoCreate.descripcion || undefined,
-					establecimiento: {
-						connect: {
-							idEstablecimiento: gastoCreate.establecimientoId,
+			// Inicia transaccion
+			const result = await this.prisma.$transaction(async (prisma) => {
+				// Crea el gasto
+				const nuevoGasto = await prisma.gastos.create({
+					data: {
+						monto: gastoCreate.monto,
+						fecha: new Date(gastoCreate.fecha),
+						descripcion: gastoCreate.descripcion || undefined,
+						establecimiento: {
+							connect: {
+								idEstablecimiento:
+									gastoCreate.idEstablecimiento,
+							},
 						},
 					},
-				},
+				});
+
+				const cuentasActualizadas = [];
+
+				// Relaciona el gasto con las cuentas en la tabla GastosCuentas y actualiza el saldo
+				for (const cuentaId of gastoCreate.idsCuentas) {
+					// Busca la cuenta por ID y verifica si existe
+					const cuenta = await prisma.cuentas.findUnique({
+						where: {idCuenta: cuentaId},
+					});
+
+					if (!cuenta) {
+						throw new NotFoundException(
+							`No se encontró la cuenta con el id: ${cuentaId}`,
+						);
+					}
+
+					// Verifica si el saldo es suficiente
+					const nuevoSaldo = cuenta.saldo - gastoCreate.monto;
+					if (nuevoSaldo < 0) {
+						throw new BadRequestException(
+							`Saldo insuficiente en la cuenta con ID: ${cuentaId}`,
+						);
+					}
+
+					// Actualiza el saldo de la cuenta
+					const cuentaActualizada = await prisma.cuentas.update({
+						where: {idCuenta: cuentaId},
+						data: {saldo: nuevoSaldo},
+					});
+
+					cuentasActualizadas.push(cuentaActualizada);
+
+					// Inserta en la tabla GastosCuentas para crear la relación
+					await prisma.gastosCuentas.create({
+						data: {
+							idCuenta: cuentaId,
+							idGasto: nuevoGasto.idGasto,
+						},
+					});
+				}
+
+				return {nuevoGasto, cuentasActualizadas};
 			});
 
-			// Relaciona el gasto con las cuentas en la tabla CuentasGastos
-			for (const cuentaId of gastoCreate.cuentasIds) {
-				await this.prisma.gastosCuentas.create({
-					data: {
-						idCuenta: cuentaId,
-						idGasto: nuevoGasto.idGasto,
-					},
-				});
-			}
-
-			return nuevoGasto;
+			return {
+				gasto: result.nuevoGasto,
+				cuentas: result.cuentasActualizadas,
+			};
 		} catch (error) {
-			throw new NotFoundException('No se pudo crear el gasto');
+			throw new NotFoundException(
+				`No se pudo crear el gasto o debitar de una o más cuentas: ${error.message}`,
+			);
 		}
 	}
 
@@ -83,98 +125,108 @@ export class GastoService {
 
 	async update(gastoUpdate: UpdateGastoDto): Promise<any> {
 		try {
-			const gastoActualizado = await this.prisma.gastos.update({
-				where: {idGasto: gastoUpdate.idGasto},
-				data: {
-					monto: gastoUpdate.monto || undefined,
-					fecha: gastoUpdate.fecha,
-					establecimiento: gastoUpdate.establecimientoId
-						? {
-								connect: {
-									idEstablecimiento:
-										gastoUpdate.establecimientoId,
-								},
-							}
-						: undefined,
-				},
-			});
-			// Verfica que se  envían cuentas para debitar y actualiza la tabla asociativa
-			if (gastoUpdate.cuentasIds && gastoUpdate.cuentasIds.length > 0) {
-				// Primero eliminamos las relaciones existentes
+			if (gastoUpdate.idsCuentas && gastoUpdate.idsCuentas.length > 0) {
+				const cuentasConNuevoSaldo = [];
+
+				// Valida si el  saldo es suficiente en todas las cuentas
+				for (const idCuenta of gastoUpdate.idsCuentas) {
+					const cuenta = await this.prisma.cuentas.findUnique({
+						where: {idCuenta: idCuenta},
+					});
+
+					if (!cuenta) {
+						throw new NotFoundException(
+							`No se encontró la cuenta con el id: ${idCuenta}`,
+						);
+					}
+
+					const nuevoSaldo = cuenta.saldo - gastoUpdate.monto;
+
+					if (nuevoSaldo < 0) {
+						throw new BadRequestException(
+							`Saldo insuficiente en la cuenta con ID: ${idCuenta}`,
+						);
+					}
+
+					// Almacena las cuentas con saldo actualizado
+					cuentasConNuevoSaldo.push({idCuenta, nuevoSaldo});
+				}
+
+				// Si se tiene el saldo suficiente se actualiza los cambios
 				await this.prisma.gastosCuentas.deleteMany({
 					where: {idGasto: gastoUpdate.idGasto},
 				});
 
-				// Creamos las nuevas relaciones en la tabla asociativa
-				const nuevasRelaciones = gastoUpdate.cuentasIds.map(
+				const nuevasRelaciones = gastoUpdate.idsCuentas.map(
 					(idCuenta) => ({
 						idCuenta,
-						idGasto: gastoActualizado.idGasto,
+						idGasto: gastoUpdate.idGasto,
 					}),
 				);
 
 				await this.prisma.gastosCuentas.createMany({
 					data: nuevasRelaciones,
 				});
+
+				// Actualiza el saldo de las cuentas
+				for (const {idCuenta, nuevoSaldo} of cuentasConNuevoSaldo) {
+					await this.prisma.cuentas.update({
+						where: {idCuenta},
+						data: {saldo: nuevoSaldo},
+					});
+				}
 			}
+
+			// Actualizar el gasto
+			const gastoActualizado = await this.prisma.gastos.update({
+				where: {idGasto: gastoUpdate.idGasto},
+				data: {
+					monto: gastoUpdate.monto || undefined,
+					fecha: new Date(gastoUpdate.fecha),
+					establecimiento: gastoUpdate.idEstablecimiento
+						? {
+								connect: {
+									idEstablecimiento:
+										gastoUpdate.idEstablecimiento,
+								},
+							}
+						: undefined,
+				},
+			});
+
 			return gastoActualizado;
 		} catch (error) {
-			throw new NotFoundException(
-				`No se puede actualizar el gasto con el id: ${gastoUpdate.idGasto}`,
-			);
+			// Verificacion de errores
+			if (
+				error instanceof BadRequestException ||
+				error instanceof NotFoundException
+			) {
+				throw error;
+			} else {
+				throw new NotFoundException(
+					`No se puede actualizar el gasto con el id: ${gastoUpdate.idGasto}`,
+				);
+			}
 		}
 	}
 
 	async remove(id: number): Promise<any> {
 		try {
-			return await this.prisma.gastos.delete({
-				where: {idGasto: id},
+			// Inicia transaccion
+			await this.prisma.$transaction(async (prisma) => {
+				// Elimina las relaciones en la tabla asociativa
+				await prisma.gastosCuentas.deleteMany({
+					where: {idGasto: id},
+				});
+
+				// Después de eliminar las relaciones, elimina el gasto
+				await prisma.gastos.delete({
+					where: {idGasto: id},
+				});
 			});
 		} catch (error) {
 			throw new NotFoundException(
-				`No se puede eliminar el gasto con el id: ${id}`,
-			);
-		}
-	}
-
-	async debit(gastoUpdate: CreateGastoDto): Promise<any> {
-		try {
-			const cuentasActualizadas = [];
-
-			for (const cuentaId of gastoUpdate.cuentasIds) {
-				// Busca la cuenta por ID y verifica si existe
-				const cuenta = await this.prisma.cuentas.findUnique({
-					where: {idCuenta: cuentaId},
-				});
-
-				if (!cuenta) {
-					throw new NotFoundException(
-						`No se encontró la cuenta con el id: ${cuentaId}`,
-					);
-				}
-
-				const nuevoSaldo = cuenta.saldo - gastoUpdate.monto;
-
-				// Verifica si el saldo es suficiente
-				if (nuevoSaldo < 0) {
-					throw new BadRequestException(
-						`Saldo insuficiente en la cuenta con ID: ${cuentaId}`,
-					);
-				}
-
-				// Actualiza el saldo de la cuenta
-				const cuentaActualizada = await this.prisma.cuentas.update({
-					where: {idCuenta: cuentaId},
-					data: {saldo: nuevoSaldo},
-				});
-
-				cuentasActualizadas.push(cuentaActualizada);
-			}
-
-			return cuentasActualizadas;
-		} catch (error) {
-			throw new NotFoundException(
-				'No se pudo debitar de una o más cuentas',
+				`No se puede eliminar el gasto con el id: ${id}, debido a restricciones de relaciones o no se encontró el gasto`,
 			);
 		}
 	}

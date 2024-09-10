@@ -23,10 +23,7 @@ export class GastoController {
 	})
 	@Post()
 	async create(@Body() gastoCreate: CreateGastoDto): Promise<any> {
-		const gasto = await this.gastoService.create(gastoCreate);
-
-		// Debita de todas las cuentas asociadas
-		const cuentas = await this.gastoService.debit(gastoCreate);
+		const {gasto, cuentas} = await this.gastoService.create(gastoCreate);
 
 		return {
 			statusCode: HttpStatus.CREATED,
@@ -68,7 +65,7 @@ export class GastoController {
 	@ApiOperation({
 		summary: 'Edita los gastos',
 	})
-	@Patch(':id')
+	@Patch()
 	async update(@Body() gastoUpdate: UpdateGastoDto): Promise<any> {
 		const gasto = await this.gastoService.update(gastoUpdate);
 		return {

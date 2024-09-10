@@ -1,6 +1,11 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import {PrismaService} from 'src/config/prisma.service';
 import {CreateCuentaDto, UpdateCuentaDto} from './cuenta.dto';
+import {PrismaClientKnownRequestError} from '@prisma/client/runtime/library';
 
 @Injectable()
 export class CuentaService {
@@ -11,12 +16,21 @@ export class CuentaService {
 			return await this.prisma.cuentas.create({
 				data: {
 					nombre: cuentaCreate.nombre,
-					saldo: cuentaCreate.saldo,
+					saldo: 0,
 					descripcion: cuentaCreate.descripcion || undefined,
 				},
 			});
 		} catch (error) {
-			throw new NotFoundException(`No se pudo crear la cuenta`);
+			if (
+				error instanceof PrismaClientKnownRequestError &&
+				error.code === 'P2002'
+			) {
+				throw new BadRequestException(
+					'El nombre de la cuenta ya existe.',
+				);
+			} else {
+				throw new NotFoundException(`No se pudo crear la cuenta`);
+			}
 		}
 	}
 
@@ -49,7 +63,6 @@ export class CuentaService {
 				where: {idCuenta: cuentaUpdate.idCuenta},
 				data: {
 					nombre: cuentaUpdate.nombre || undefined,
-					saldo: cuentaUpdate.saldo || undefined,
 					descripcion: cuentaUpdate.descripcion || undefined,
 				},
 			});

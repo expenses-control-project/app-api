@@ -1,4 +1,3 @@
-import {Type} from 'class-transformer';
 import {
 	IsNotEmpty,
 	IsNumber,
@@ -11,10 +10,6 @@ export class CreateCuentaDto {
 	@IsString({message: 'El nombre debe ser un string'})
 	@MinLength(4, {message: 'El nombre debe tener al menos 4 caracteres'})
 	nombre: string;
-
-	@IsNumber({}, {message: 'El saldo debe ser un número'})
-	@IsOptional()
-	saldo: number = 0;
 
 	@IsString({message: 'La descripción debe ser un string'})
 	@IsOptional()
@@ -30,11 +25,6 @@ export class UpdateCuentaDto {
 	@MinLength(4, {message: 'El nombre debe tener al menos 4 caracteres'})
 	@IsOptional()
 	nombre?: string;
-
-	@IsNumber({}, {message: 'El saldo debe ser un número'})
-	@IsNotEmpty({message: 'El saldo no puede estar vacío'})
-	@IsOptional()
-	saldo?: number;
 
 	@IsString({message: 'La descripción debe ser un string'})
 	@IsOptional()
