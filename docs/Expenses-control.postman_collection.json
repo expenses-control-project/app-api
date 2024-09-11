@@ -1,0 +1,4055 @@
+{
+	"info": {
+		"_postman_id": "904ee900-3ca3-4070-b679-7b0a0cbdb2e3",
+		"name": "Expenses-control",
+		"description": "Documentacion de la API Expenses-control",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34776371"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "cuenta",
+					"item": [
+						{
+							"name": "Crea una cuenta ",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Ualá\",\r\n    \"descripcion\": \"otra billetera virtual argentina\"\r\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/cuenta",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"cuenta"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "El nombre debe tener 4 cacteres",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"nombre\": \"Me\",\r\n    \"descripcion\": \"billetera virtual argentina\"\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "97"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"61-FH3zSYqEp/7oJfLP5OBZ9+v0WOE\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 13:41:38 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": [\n        \"El nombre debe tener al menos 4 caracteres\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+								},
+								{
+									"name": "Cuenta creada",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"nombre\": \"Mercado Libre\",\r\n    \"descripcion\": \"billetera virtual argentina\"\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "197"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c5-ypM9Ht+MO5oB/lspe0WrRtXzhA0\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 13:42:22 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 201,\n    \"timestamp\": \"2024-09-09T13:42:22.649Z\",\n    \"message\": \"Cuenta creada con éxito\",\n    \"cuenta\": {\n        \"idCuenta\": 1,\n        \"nombre\": \"Mercado Libre\",\n        \"descripcion\": \"billetera virtual argentina\",\n        \"saldo\": 0\n    }\n}"
+								},
+								{
+									"name": "El nombre de la cuenta ya existe",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"nombre\": \"Ualá\",\r\n    \"descripcion\": \"otra billetera virtual argentina\"\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "86"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"56-jeqpSO4gle/F/NAfFx6Q0nEEw1w\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:10:41 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"El nombre de la cuenta ya existe.\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+								}
+							]
+						},
+						{
+							"name": "Obtiene todas las cuentas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/cuenta",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"cuenta"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "No se encontraron cuentas",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "76"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4c-OFzWwGa+wGZoNYGdfcguxK17cQc\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 01:39:56 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se encontraron cuentas\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Cuentas encontradas",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "296"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"128-KRH69PLVZCHs6C44i8FcfYuBqVE\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 13:43:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T13:43:23.704Z\",\n    \"message\": \"Cuentas encontradas con éxito\",\n    \"cuenta\": [\n        {\n            \"idCuenta\": 1,\n            \"nombre\": \"Mercado Libre\",\n            \"descripcion\": \"billetera virtual argentina\",\n            \"saldo\": 0\n        },\n        {\n            \"idCuenta\": 2,\n            \"nombre\": \"Ualá\",\n            \"descripcion\": \"otra billetera virtual argentina\",\n            \"saldo\": 0\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Obtiene cuentas por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/cuenta/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"cuenta",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Cuenta encontrada",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta/1",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "201"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c9-ZhUOmqNo3HwScOr0KIHjX83nq5k\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 13:47:02 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T13:47:02.850Z\",\n    \"message\": \"Cuenta encontrada con éxito\",\n    \"cuenta\": {\n        \"idCuenta\": 1,\n        \"nombre\": \"Mercado Libre\",\n        \"descripcion\": \"billetera virtual argentina\",\n        \"saldo\": 0\n    }\n}"
+								},
+								{
+									"name": "No se encontro la cuenta",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta/5",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta",
+												"5"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "89"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"59-SepPLnf3AKevhqg1b+HeyurfbUY\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 13:47:33 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se encontró la cuenta con el id: 5\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								}
+							]
+						},
+						{
+							"name": "Elimina una cuenta por ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/cuenta/2",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"cuenta",
+										"2"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "No se puede eliminar",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta/5",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta",
+												"5"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "94"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5e-4kC3e+6aXH8bSIIarOa5QYrvy/Q\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 13:59:35 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se puede eliminar la cuenta con el id: 5\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Cuenta eliminada",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta/2",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta",
+												"2"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "97"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"61-F2eFDsUw9BirCjMYuyKx0+iW4SY\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:00:10 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:00:10.283Z\",\n    \"message\": \"Cuenta eliminada con éxito\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Edita las cuentas",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idCuenta\": 1,\r\n    \"nombre\": \"Ioler\"\r\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/cuenta/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"cuenta",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Error id cuenta",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idCuenta\": 5,\r\n    \"nombre\": \"Ioler\"\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "122"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"7a-B+fM07WIZBIZr5+Hp3qaNYPeiHs\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:11:44 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": [\n        \"El idCuenta no puede estar vacío\",\n        \"El idCuenta debe ser un número\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+								},
+								{
+									"name": "No se puede actualizar la cuenta",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idCuenta\": 5,\r\n    \"nombre\": \"Ioler\"\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "96"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"60-RrBtKqA89ZY+HFxkuZe1DSyzeFA\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:12:22 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se puede actualizar la cuenta con el id: 5\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Cuenta actualizada",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idCuenta\": 1,\r\n    \"nombre\": \"Ioler\"\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/cuenta/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cuenta",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "195"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c3-2bsFvpVlAdxsNpqubPneTV1FcVM\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:13:54 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:13:54.136Z\",\n    \"message\": \"Cuenta editada con éxito\",\n    \"cuenta\": {\n        \"idCuenta\": 1,\n        \"nombre\": \"Ioler\",\n        \"descripcion\": \"otra billetera virtual argentina\",\n        \"saldo\": 0\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "rubro",
+					"item": [
+						{
+							"name": "Obtiene todos los rubros",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/rubro",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"rubro"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Rubros encontrados",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/rubro",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"rubro"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "629"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"275-0pQQT0PKKggFieRCx5pHHbgA/hw\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:04:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:04:04.778Z\",\n    \"message\": \"Rubros encontrados con éxito\",\n    \"rubros\": [\n        {\n            \"idRubro\": 1,\n            \"nombreRubro\": \"Alimentación y Bebidas\"\n        },\n        {\n            \"idRubro\": 2,\n            \"nombreRubro\": \"Moda y Textil\"\n        },\n        {\n            \"idRubro\": 3,\n            \"nombreRubro\": \"Tecnología y Electrónica\"\n        },\n        {\n            \"idRubro\": 4,\n            \"nombreRubro\": \"Salud y Bienestar\"\n        },\n        {\n            \"idRubro\": 5,\n            \"nombreRubro\": \"Construcción e Inmobiliaria\"\n        },\n        {\n            \"idRubro\": 6,\n            \"nombreRubro\": \"Transporte y Logística\"\n        },\n        {\n            \"idRubro\": 7,\n            \"nombreRubro\": \"Educación y Capacitación\"\n        },\n        {\n            \"idRubro\": 8,\n            \"nombreRubro\": \"Automotriz\"\n        },\n        {\n            \"idRubro\": 9,\n            \"nombreRubro\": \"Entretenimiento y Ocio\"\n        },\n        {\n            \"idRubro\": 10,\n            \"nombreRubro\": \"Turismo y Hotelería\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "ingreso",
+					"item": [
+						{
+							"name": "Crea un ingreso ",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"saldo\": 5000,\r\n  \"fecha\": \"2024-09-05\",\r\n  \"idCuenta\": 1\r\n}\r\n",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/ingreso",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"ingreso"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Error fecha",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"saldo\": 5000,\r\n    \"fecha\": \"5-09-2024\",\r\n    \"idCuenta\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "82"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"52-iYzDFCmfALkVD8Cd9n/98l9s9wI\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:42:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": [\n        \"La fecha debe ser tipo date\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+								},
+								{
+									"name": "Ingreso creado",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"saldo\": 5000,\r\n  \"fecha\": \"2024-09-05\",\r\n  \"idCuenta\": 1\r\n}\r\n",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "285"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"11d-LrNpyA/R4GJat+RUq1dmwDztXOs\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:49:14 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 201,\n    \"timestamp\": \"2024-09-09T14:49:14.290Z\",\n    \"message\": \"Ingreso creado con éxito\",\n    \"ingreso\": {\n        \"idIngreso\": 1,\n        \"saldo\": 5000,\n        \"fecha\": \"2024-09-05T00:00:00.000Z\",\n        \"idCuenta\": 1\n    },\n    \"cuenta\": {\n        \"idCuenta\": 1,\n        \"nombre\": \"Ualá\",\n        \"descripcion\": \"otra billetera virtual argentina\",\n        \"saldo\": 5000\n    }\n}"
+								},
+								{
+									"name": "Error no encuentra la cuenta",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"saldo\": 5000,\r\n  \"fecha\": \"2024-09-05\",\r\n  \"idCuenta\": 5\r\n}\r\n",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "92"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5c-0vuv7P9tGg50U5JjAjVtzxDMw5Q\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:50:16 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se pudo crear el ingreso correctamente\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Agrega saldo correctamente",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"saldo\": 5000,\r\n  \"fecha\": \"2024-09-05\",\r\n  \"idCuenta\": 1\r\n}\r\n",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "286"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"11e-8KGiIH/NubvLDZ27TpD2/neQCOM\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:56:28 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 201,\n    \"timestamp\": \"2024-09-09T14:56:28.026Z\",\n    \"message\": \"Ingreso creado con éxito\",\n    \"ingreso\": {\n        \"idIngreso\": 2,\n        \"saldo\": 5000,\n        \"fecha\": \"2024-09-05T00:00:00.000Z\",\n        \"idCuenta\": 1\n    },\n    \"cuenta\": {\n        \"idCuenta\": 1,\n        \"nombre\": \"Ualá\",\n        \"descripcion\": \"otra billetera virtual argentina\",\n        \"saldo\": 10000\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Obtiene todos los ingresos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/ingreso",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"ingreso"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "No se encontraron ingresos",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "77"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4d-yDsnzN5t+JFqS093jdnjvMvNuXo\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 01:33:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se encontraron ingresos\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Ingreso encontrado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "190"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"be-1UKo1wyWeFXTrwymBktRBb7aIsQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:50:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:50:40.637Z\",\n    \"message\": \"Ingresos encontrados con éxito\",\n    \"ingreso\": [\n        {\n            \"idIngreso\": 1,\n            \"saldo\": 5000,\n            \"fecha\": \"2024-09-05T00:00:00.000Z\",\n            \"idCuenta\": 1\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Obtiene ingresos por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/ingreso/20",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"ingreso",
+										"20"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Ingreso encontrado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso/1",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "186"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"ba-nAJxOcYYM6iS10Qs7WCU4VvhZis\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:55:20 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:55:20.859Z\",\n    \"message\": \"Ingreso encontrado con éxito\",\n    \"ingreso\": {\n        \"idIngreso\": 1,\n        \"saldo\": 5000,\n        \"fecha\": \"2024-09-05T00:00:00.000Z\",\n        \"idCuenta\": 1\n    }\n}"
+								},
+								{
+									"name": "Error de id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso/20",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso",
+												"20"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "91"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5b-2FxUErw7owxu35yqz9Ij+ybFs2c\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:55:44 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se encontró el ingreso con el id: 20\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								}
+							]
+						},
+						{
+							"name": "Edita los ingresos",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idIngreso\": 3,\r\n    \"saldo\": 3500,\r\n    \"fecha\": \"2024-09-09\",\r\n    \"idCuenta\": 1\r\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/ingreso/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"ingreso",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Error de cuenta id",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idIngreso\": 1,\r\n    \"saldo\": 25000,\r\n    \"fecha\": \"2024-09-09\",\r\n    \"idCuenta\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "130"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"82-S+MQlccJU9+Zv4tklQyU1ayzQ28\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 15:00:59 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": [\n        \"La cuenta id no puede estar vacío\",\n        \"El ID de la cuenta debe ser un número\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+								},
+								{
+									"name": "Ingreso editado y cuenta correspondiente",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idIngreso\": 1,\r\n    \"saldo\": 3500,\r\n    \"fecha\": \"2024-09-09\",\r\n    \"idCuenta\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "286"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"11e-fvmOipXzWd1nCLeELatT1nrR4cU\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 15:21:27 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T15:21:27.090Z\",\n    \"message\": \"Ingreso editado con éxito\",\n    \"ingreso\": {\n        \"idIngreso\": 1,\n        \"saldo\": 3500,\n        \"fecha\": \"2024-09-09T00:00:00.000Z\",\n        \"idCuenta\": 1\n    },\n    \"cuenta\": {\n        \"idCuenta\": 1,\n        \"nombre\": \"Ualá\",\n        \"descripcion\": \"otra billetera virtual argentina\",\n        \"saldo\": 3500\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Elimina un ingreso por ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/ingreso/2",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"ingreso",
+										"2"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Error de id al eliminar",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso/20",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso",
+												"20"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "96"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"60-SzEuvw3gL3T/hM8qsowCfZXhzYU\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:57:20 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se puede eliminar el ingreso con el id: 20\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Ingreso eliminado",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/ingreso/2",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ingreso",
+												"2"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "98"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"62-RLhDYejtvpFC16UoOowHXQNjGAE\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:58:07 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:58:07.634Z\",\n    \"message\": \"Ingreso eliminado con éxito\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "gasto",
+					"item": [
+						{
+							"name": "Crea un gasto y debita de las cuentas correspondientes",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"monto\": 500,\r\n    \"fecha\": \"2024-09-01\",\r\n    \"descripcion\": \"comprando algo\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/gasto",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"gasto"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Gasto creado",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"monto\": 500,\r\n    \"fecha\": \"2024-09-01\",\r\n    \"descripcion\": \"comprando cosas\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "344"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"158-g6A80AJJjIJ3l69TLrHKjtgh1m0\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 23:30:52 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 201,\n    \"timestamp\": \"2024-09-09T23:30:52.755Z\",\n    \"message\": \"Gasto creado y debitado de cuentas con éxito\",\n    \"gasto\": {\n        \"idGasto\": 1,\n        \"descripcion\": \"comprando cosas\",\n        \"monto\": 500,\n        \"fecha\": \"2024-09-01T00:00:00.000Z\",\n        \"idEstablecimiento\": 1\n    },\n    \"cuentas\": [\n        {\n            \"idCuenta\": 1,\n            \"nombre\": \"Ualá\",\n            \"descripcion\": \"otra billetera virtual argentina\",\n            \"saldo\": 3000\n        }\n    ]\n}"
+								},
+								{
+									"name": "No se puede crear el gasto",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"monto\": 500,\r\n    \"fecha\": \"2024-09-01\",\r\n    \"descripcion\": \"comprando cosas\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 25\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "76"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4c-251HNXB6qDdC9grKD3+n9c+ERZE\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 23:32:01 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se pudo crear el gasto\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Error 2",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"monto\": 500,\r\n    \"fecha\": \"2024-09-01\",\r\n    \"descripcion\": \"comprando algo\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "101"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"65-wV8IN3MKcmCHXgDq/eBh0DmdU98\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:02:32 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Error al crear el gasto o al debitar las cuentas\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+								},
+								{
+									"name": "Saldo insuficiente",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"monto\": 50550,\r\n    \"fecha\": \"2024-09-01\",\r\n    \"descripcion\": \"comprando algo\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "151"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"97-1gU1K97BnjLLBgNpZ1vrI8fubEg\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:27:28 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se pudo crear el gasto o debitar de una o más cuentas: Saldo insuficiente en la cuenta con ID: 1\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Gasto creado",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"monto\": 500,\r\n    \"fecha\": \"2024-09-01\",\r\n    \"descripcion\": \"comprando algo\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "343"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"157-GscR95qb+wJxJf4Soe4JgW+Hcwo\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:28:20 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 201,\n    \"timestamp\": \"2024-09-10T00:28:20.262Z\",\n    \"message\": \"Gasto creado y debitado de cuentas con éxito\",\n    \"gasto\": {\n        \"idGasto\": 16,\n        \"descripcion\": \"comprando algo\",\n        \"monto\": 500,\n        \"fecha\": \"2024-09-01T00:00:00.000Z\",\n        \"idEstablecimiento\": 1\n    },\n    \"cuentas\": [\n        {\n            \"idCuenta\": 1,\n            \"nombre\": \"Ualá\",\n            \"descripcion\": \"otra billetera virtual argentina\",\n            \"saldo\": 500\n        }\n    ]\n}"
+								},
+								{
+									"name": "Saldo insuficiente",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"monto\": 500,\r\n    \"fecha\": \"2024-09-01\",\r\n    \"descripcion\": \"comprando algo\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "151"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"97-1gU1K97BnjLLBgNpZ1vrI8fubEg\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:35:57 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se pudo crear el gasto o debitar de una o más cuentas: Saldo insuficiente en la cuenta con ID: 1\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								}
+							]
+						},
+						{
+							"name": "Obtiene todos los gastos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/gasto",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"gasto"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "No se encotaron gastos",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "75"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4b-i9TBOmAGonC4pbJEoUhA2GvMpZ0\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 01:40:41 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se encontraron gastos\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Todos los gastos",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "367"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"16f-wqklcmEDg8fpWOG/rUAKJib25O4\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:34:33 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-10T00:34:33.208Z\",\n    \"message\": \"Gastos encontrados con éxito\",\n    \"gasto\": [\n        {\n            \"idGasto\": 17,\n            \"descripcion\": \"comprando algo\",\n            \"monto\": 500,\n            \"fecha\": \"2024-09-01T00:00:00.000Z\",\n            \"idEstablecimiento\": 1,\n            \"cuentaList\": [\n                {\n                    \"idGasto\": 17,\n                    \"idCuenta\": 1,\n                    \"cuenta\": {\n                        \"idCuenta\": 1,\n                        \"nombre\": \"Ualá\",\n                        \"descripcion\": \"otra billetera virtual argentina\",\n                        \"saldo\": 0\n                    }\n                }\n            ]\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Obtiene gastos por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/gasto/500",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"gasto",
+										"500"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "No se encontro id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto/17",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto",
+												"17"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "90"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5a-7nbfjm8SLdun64dp47Ovkd6sABQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:35:00 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se encontró el gasto con el id: 500\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Obtiene gasto id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto/17",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto",
+												"17"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "454"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1c6-qtDX6DzMKfpaEcC6yq/Cu+1Bey8\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:35:27 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-10T00:35:27.037Z\",\n    \"message\": \"Gasto encontrado con éxito\",\n    \"gasto\": {\n        \"idGasto\": 17,\n        \"descripcion\": \"comprando algo\",\n        \"monto\": 500,\n        \"fecha\": \"2024-09-01T00:00:00.000Z\",\n        \"idEstablecimiento\": 1,\n        \"establecimiento\": {\n            \"idEstablecimiento\": 1,\n            \"nombreEstablecimiento\": \"La Gallega\",\n            \"idRubro\": 1\n        },\n        \"cuentaList\": [\n            {\n                \"idGasto\": 17,\n                \"idCuenta\": 1,\n                \"cuenta\": {\n                    \"idCuenta\": 1,\n                    \"nombre\": \"Ualá\",\n                    \"descripcion\": \"otra billetera virtual argentina\",\n                    \"saldo\": 0\n                }\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Edita los gastos",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idGasto\": 17,\r\n    \"monto\": 15000,\r\n    \"fecha\": \"2024-09-09\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/gasto",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"gasto"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "No se puede actualizar el gasto con el id",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idGasto\": 16,\r\n    \"monto\": 500,\r\n    \"fecha\": \"2024-09-09\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "96"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"60-fPIGMfBC/DjVMQthjyCEKvpEVZg\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:50:43 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se puede actualizar el gasto con el id: 16\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Gasto editado con exito",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idGasto\": 17,\r\n    \"monto\": 700,\r\n    \"fecha\": \"2024-09-09\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "217"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"d9-GFa7O80DN8BL5Qb5uUgOBBiVss0\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:51:24 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-10T00:51:24.924Z\",\n    \"message\": \"Gasto editado con éxito\",\n    \"gasto\": {\n        \"idGasto\": 17,\n        \"descripcion\": \"comprando algo\",\n        \"monto\": 700,\n        \"fecha\": \"2024-09-09T00:00:00.000Z\",\n        \"idEstablecimiento\": 1\n    }\n}"
+								},
+								{
+									"name": "Saldo insuficiente",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idGasto\": 17,\r\n    \"monto\": 15000,\r\n    \"fecha\": \"2024-09-09\",\r\n    \"idEstablecimiento\": 1,\r\n    \"idsCuentas\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "94"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5e-XXdDsVsD1ixrLEMYVVAilbX0/6Q\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 01:30:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Saldo insuficiente en la cuenta con ID: 1\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+								}
+							]
+						},
+						{
+							"name": "Elimina un gasto por ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/gasto/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"gasto",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "No se puede eliminar el gasto",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto/14",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto",
+												"14"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "95"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5f-pmMrxyPWDOljeX2TADehlVtHA3s\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:11:53 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se puede eliminar el gasto con el id: 500\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Gasto eliminado",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto/16",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto",
+												"16"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "96"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"60-ZGk3sOCbTHDVnpJwFZuq3w+fX08\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:31:53 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-10T00:31:53.835Z\",\n    \"message\": \"Gasto eliminado con éxito\"\n}"
+								},
+								{
+									"name": "Restricciones de relaciones",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/gasto/10",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"gasto",
+												"10"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "159"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9f-zEjMyXx50b8CWhdZDkOemZtqw98\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Sep 2024 00:32:51 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se puede eliminar el gasto con el id: 10, debido a restricciones de relaciones o no se encontró el gasto\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "establecimiento",
+					"item": [
+						{
+							"name": "Crea un establecimiento",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombreEstablecimiento\": \"Carrefour\",\r\n    \"rubroId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/establecimiento",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"establecimiento"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Establecimiento creado",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"nombreEstablecimiento\": \"COTO\",\r\n    \"rubroId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "188"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"bc-L9K9a2bBUa22VmGxlGckb2kB31I\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:16:55 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 201,\n    \"timestamp\": \"2024-09-09T14:16:55.280Z\",\n    \"message\": \"Establecimiento creado con éxito\",\n    \"establecimiento\": {\n        \"idEstablecimiento\": 1,\n        \"nombreEstablecimiento\": \"COTO\",\n        \"idRubro\": 1\n    }\n}"
+								},
+								{
+									"name": "Error al crear",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"nombreEstablecimiento\": \"COTO\",\r\n    \"rubroId\": 25\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "86"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"56-FTGbLQyQxCCShgUqNy+Xogcizgw\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:17:30 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se pudo crear el establecimiento\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Error nombre ya existe",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"nombreEstablecimiento\": \"COTO\",\r\n    \"rubroId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "93"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5d-DJHQL0uiQxv+XmUG8z2xQKBnQFk\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:23:24 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"El nombre del establecimiento ya existe.\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+								}
+							]
+						},
+						{
+							"name": "Obtiene todos los establecimientos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/establecimiento",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"establecimiento"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "No se encontraron establecimientos",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "85"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"55-6F6Xwuml0/Mi8tZXnUUHluJwPWA\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 01:35:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se encontraron establecimientos\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Establecimiento encontrado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "274"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"112-Mg+f4tzlRTRWn0cwkPN/rO2gAKA\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:32:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:32:36.628Z\",\n    \"message\": \"Establecimientos encontrados con éxito\",\n    \"establecimiento\": [\n        {\n            \"idEstablecimiento\": 4,\n            \"nombreEstablecimiento\": \"Carrefour\",\n            \"idRubro\": 1\n        },\n        {\n            \"idEstablecimiento\": 1,\n            \"nombreEstablecimiento\": \"La Gallega\",\n            \"idRubro\": 1\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Obtiene establecimientos por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/establecimiento/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"establecimiento",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Establecimiento encontrado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento/20",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento",
+												"20"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "192"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c0-iR4Tga62yfnOTfdeOG7qLIfKd00\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:25:56 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:25:56.690Z\",\n    \"message\": \"Establecimiento encontrado con éxito\",\n    \"establecimiento\": {\n        \"idEstablecimiento\": 1,\n        \"nombreEstablecimiento\": \"COTO\",\n        \"idRubro\": 1\n    }\n}"
+								},
+								{
+									"name": "No se encontro el establecimiento",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento/20",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento",
+												"20"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "99"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"63-xjGT38sOKsYUFYOkeL3F0GFo4I4\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:26:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se encontró el establecimiento con el id: 20\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								}
+							]
+						},
+						{
+							"name": "Edita los establecimientos",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/establecimiento/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"establecimiento",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Error al editar",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idEstablecimiento\": 20,\r\n    \"nombreEstablecimiento\": \"La Gallega\",\r\n    \"rubroId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": ""
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "185"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"b9-S2ggPiuRWK3TOynw1JPT5MlE69E\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:29:56 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": [\n        \"El idEstablecimiento no puede estar vacío\",\n        \"El idEstablecimiento debe ser un número\",\n        \"El nombre debe tener al menos 4 caracteres\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+								},
+								{
+									"name": "Error id de establecimiento no existe",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idEstablecimiento\": 1,\r\n    \"nombreEstablecimiento\": \"La Gallega\",\r\n    \"rubroId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": ""
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "106"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"6a-GoNBeKaPhKKrUdrqNQBTwmUuuWE\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:31:05 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se puede actualizar el establecimiento con el id: 20\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								},
+								{
+									"name": "Establecimiento editado",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idEstablecimiento\": 1,\r\n    \"nombreEstablecimiento\": \"La Gallega\",\r\n    \"rubroId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": ""
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "195"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c3-pPRTpAXSQ5GOiPTBrBglvp29j0w\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:31:33 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:31:33.464Z\",\n    \"message\": \"Establecimiento editado con éxito\",\n    \"establecimiento\": {\n        \"idEstablecimiento\": 1,\n        \"nombreEstablecimiento\": \"La Gallega\",\n        \"idRubro\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Elimina un establecimiento por ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/establecimiento/10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"establecimiento",
+										"10"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Establecimiento eliminado",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento/2",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento",
+												"2"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "106"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"6a-7B6OtIIWkRad4uAndv12kt3+QSI\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:21:28 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 200,\n    \"timestamp\": \"2024-09-09T14:21:28.901Z\",\n    \"message\": \"Establecimiento eliminado con éxito\"\n}"
+								},
+								{
+									"name": "Error de eliminar",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/establecimiento/10",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"establecimiento",
+												"10"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "104"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"68-UuYScorvr57vJ8+VDCxI1BiKW8s\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 09 Sep 2024 14:27:41 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"No se puede eliminar el establecimiento con el id: 10\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3001"
+		}
+	]
+}
