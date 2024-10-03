@@ -44,7 +44,15 @@ export class EstablecimientoService {
 	}
 
 	async findAll(): Promise<any> {
-		const establecimientos = await this.prisma.establecimientos.findMany();
+		const establecimientos = await this.prisma.establecimientos.findMany({
+			include: {
+				rubro: {
+					select: {
+						nombreRubro: true
+					}
+				}
+			}
+		});
 
 		if (establecimientos.length === 0) {
 			throw new NotFoundException(`No se encontraron establecimientos`);
@@ -56,6 +64,13 @@ export class EstablecimientoService {
 	async findOne(id: number): Promise<any> {
 		const establecimiento = await this.prisma.establecimientos.findUnique({
 			where: {idEstablecimiento: id},
+			include: {
+				rubro: {
+					select: {
+						nombreRubro: true
+					}
+				}
+			}
 		});
 
 		if (!establecimiento) {
