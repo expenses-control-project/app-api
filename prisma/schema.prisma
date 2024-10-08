@@ -8,10 +8,16 @@ datasource db {
 }
 
 model Usuarios {
-  idUsuario Int    @id @default(autoincrement())
-  name      String
-  email     String
-  password  String
+  idUsuario     Int             @id @default(autoincrement())
+  nombre        String
+  apellido      String
+  edad          Float  
+  email         String          @unique
+  usuario       String          @unique
+  password      String
+  role          ROLES           @default(USUARIO)
+  acceso        ACCES_LEVEL     @default(BASIC)
+
 }
 
 model Cuentas {
@@ -64,7 +70,13 @@ model Rubros {
   establecimientoList Establecimientos[]
 }
 
+enum ROLES {
+  USUARIO
+  ADMIN
+}
 
-
-
-
+enum ACCES_LEVEL {
+  BASIC 
+  MANTEINER
+  OWNER
+}

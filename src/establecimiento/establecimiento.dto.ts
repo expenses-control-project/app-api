@@ -1,4 +1,3 @@
-import {Rubros} from '@prisma/client';
 import {
 	IsNotEmpty,
 	IsNumber,

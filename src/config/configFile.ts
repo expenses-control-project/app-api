@@ -1,12 +1,11 @@
 import {config} from 'dotenv';
-import {resolve} from 'path';
 
 // Carga de las variables de entorno
-config({path: resolve(__dirname, '../../.env')});
+config();
 
 // Variables de entorno
 export const DATABASE_URL = process.env.DATABASE_URL || '';
-export const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3002;
+export const PORT = process.env.PORT || 3002;
 
 // Comprueba que la base de datos esta definida
 if (!DATABASE_URL) {
