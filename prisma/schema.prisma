@@ -25,6 +25,7 @@ model Cuentas {
   nombre       String    @unique
   descripcion  String
   saldo        Float
+  tipoCuenta   Int
   ingresoList  Ingresos[]
   gastoCuenta  GastosCuentas[] // Relación con la tabla asociativa de Gastos
 }

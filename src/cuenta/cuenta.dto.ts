@@ -14,6 +14,14 @@ export class CreateCuentaDto {
 	@IsString({message: 'La descripción debe ser un string'})
 	@IsOptional()
 	descripcion?: string;
+
+	@IsNumber({}, {message: 'EL saldo debe ser un numero'})
+	@IsOptional()
+	saldo?: number;
+
+	@IsNumber({}, {message: 'El tipoCuenta debe ser un numero'})
+	@IsOptional()
+	tipoCuenta: number;
 }
 
 export class UpdateCuentaDto {
@@ -29,4 +37,12 @@ export class UpdateCuentaDto {
 	@IsString({message: 'La descripción debe ser un string'})
 	@IsOptional()
 	descripcion?: string;
+
+	@IsNumber({}, {message: 'EL saldo debe ser un numero'})
+	@IsOptional()
+	saldo?: number;
+	
+	@IsNumber({}, {message: 'El tipoCuenta debe ser un numero'})
+	@IsOptional()
+	tipoCuenta: number;
 }

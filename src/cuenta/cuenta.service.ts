@@ -16,8 +16,9 @@ export class CuentaService {
 			return await this.prisma.cuentas.create({
 				data: {
 					nombre: cuentaCreate.nombre,
-					saldo: 0,
+					saldo: cuentaCreate.saldo|| 0,
 					descripcion: cuentaCreate.descripcion || undefined,
+					tipoCuenta: cuentaCreate.tipoCuenta
 				},
 			});
 		} catch (error) {
@@ -64,6 +65,7 @@ export class CuentaService {
 				data: {
 					nombre: cuentaUpdate.nombre || undefined,
 					descripcion: cuentaUpdate.descripcion || undefined,
+					tipoCuenta: cuentaUpdate.tipoCuenta
 				},
 			});
 		} catch (error) {
