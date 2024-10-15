@@ -33,6 +33,7 @@ export class UsuarioController {
 	@ApiOperation({
 		summary: 'Crea un usuario',
 	})
+	@PublicAcces()
 	@Post()
 	async create(@Body() createUsuarioDto: CreateUsuarioDto): Promise<any> {
 		const usuario = await this.usuarioService.create(createUsuarioDto);

@@ -44,7 +44,7 @@ export class UsuarioService {
 					'El email o el nombre de usuario ya existe.',
 				);
 			} else {
-				throw new BadRequestException('No se pudo crear el usuario');
+				throw new BadRequestException({message: 'No se pudo crear el usuario', error: error});
 			}
 		}
 	}
