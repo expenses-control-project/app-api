@@ -44,7 +44,10 @@ export class UsuarioService {
 					'El email o el nombre de usuario ya existe.',
 				);
 			} else {
-				throw new BadRequestException({message: 'No se pudo crear el usuario', error: error});
+				throw new BadRequestException({
+					message: 'No se pudo crear el usuario',
+					error: error,
+				});
 			}
 		}
 	}
@@ -86,7 +89,48 @@ export class UsuarioService {
 
 	async update(updateUsuarioDto: UpdateUsuarioDto): Promise<any> {
 		try {
-			const usuario = await this.prisma.usuarios.update({
+			// Encuentra el usuario
+			const usuario = await this.prisma.usuarios.findUnique({
+				where: {idUsuario: updateUsuarioDto.idUsuario},
+			});
+
+			if (!usuario) {
+				throw new NotFoundException(
+					`Usuario con id ${updateUsuarioDto.idUsuario} no encontrado.`,
+				);
+			}
+
+			// Comprueba si viene la nueva y la vieja password en el body
+			if (updateUsuarioDto.password && updateUsuarioDto.passwordOld) {
+				// compara las contraseñas
+				const isMatch = await bcrypt.compare(
+					updateUsuarioDto.passwordOld,
+					usuario.password,
+				);
+
+				if (!isMatch) {
+					throw new BadRequestException(
+						'Las contraseñas proporcionadas no coinciden.',
+					);
+				}
+
+				// encripta la nueva contraseña
+				const hashedPassword = await bcrypt.hash(
+					updateUsuarioDto.password,
+					+process.env.HASH_SALT,
+				);
+
+				updateUsuarioDto.password = hashedPassword;
+			} else if (
+				updateUsuarioDto.password &&
+				!updateUsuarioDto.passwordOld
+			) {
+				throw new BadRequestException(
+					'Debes proporcionar la contraseña anterior para actualizar la nueva.',
+				);
+			}
+
+			const updatedUsuario = await this.prisma.usuarios.update({
 				where: {idUsuario: updateUsuarioDto.idUsuario},
 				data: {
 					nombre: updateUsuarioDto.nombre || undefined,
@@ -97,7 +141,8 @@ export class UsuarioService {
 					password: updateUsuarioDto.password || undefined,
 				},
 			});
-			return plainToInstance(ResponseUsuarioDto, usuario);
+
+			return plainToInstance(ResponseUsuarioDto, updatedUsuario);
 		} catch (error) {
 			throw new NotFoundException(
 				`No se puede actualizar el usuario con el id: ${updateUsuarioDto.idUsuario}`,

@@ -83,6 +83,10 @@ export class UpdateUsuarioDto {
 	@IsNotEmpty({message: 'La contraseña no puede estar vacía'})
 	@IsString({message: 'La contraseña debe ser un texto válido'})
 	password: string;
+
+	@IsNotEmpty({message: 'La contraseña no puede estar vacía'})
+	@IsString({message: 'La contraseña debe ser un texto válido'})
+	passwordOld: string;
 }
 
 export class ResponseUsuarioDto {
