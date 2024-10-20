@@ -48,7 +48,7 @@ export class UsuarioController {
 	@ApiOperation({
 		summary: 'Obtiene todos los usuarios',
 	})
-	@Roles('ADMIN')
+	@Roles('USUARIO')
 	@Get()
 	async findAll(): Promise<any> {
 		const usuarios: ResponseUsuarioDto[] =
@@ -64,7 +64,7 @@ export class UsuarioController {
 	@ApiOperation({
 		summary: 'Obtiene usuarios por ID',
 	})
-	@PublicAcces()
+	@Roles('USUARIO')
 	@Get(':id')
 	async findOne(@Param('id', ParseIntPipe) id: number): Promise<any> {
 		const usuario = await this.usuarioService.findOne(id);
@@ -79,6 +79,7 @@ export class UsuarioController {
 	@ApiOperation({
 		summary: 'Edita los usuarios',
 	})
+	@Roles('USUARIO')
 	@Patch()
 	async update(@Body() updateUsuarioDto: UpdateUsuarioDto): Promise<any> {
 		const usuario = await this.usuarioService.update(updateUsuarioDto);
@@ -93,6 +94,7 @@ export class UsuarioController {
 	@ApiOperation({
 		summary: 'Elimina un usuario por ID',
 	})
+	@Roles('USUARIO')
 	@Delete(':id')
 	async remove(@Param('id', ParseIntPipe) id: number): Promise<any> {
 		await this.usuarioService.remove(id);

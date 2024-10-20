@@ -52,7 +52,6 @@ export class AuthGuard implements CanActivate {
 		}
 		req.idUsuario = usuario.idUsuario;
 		req.roleUsuario = usuario.role;
-		req.accessLevel = usuario.acceso;
 		return true;
 	}
 }

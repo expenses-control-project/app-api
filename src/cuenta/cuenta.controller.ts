@@ -8,19 +8,25 @@ import {
 	Delete,
 	ParseIntPipe,
 	HttpStatus,
+	UseGuards,
 } from '@nestjs/common';
 import {CuentaService} from './cuenta.service';
 import {ApiOperation, ApiTags} from '@nestjs/swagger';
 import {CreateCuentaDto, UpdateCuentaDto} from './cuenta.dto';
+import {Roles} from 'src/auth/decorators/roles.decorator';
+import {AuthGuard} from 'src/auth/guards/auth.guard';
+import {RolesGuard} from 'src/auth/guards/roles.guard';
 
 @ApiTags('cuenta')
 @Controller('cuenta')
+@UseGuards(AuthGuard, RolesGuard)
 export class CuentaController {
 	constructor(private readonly cuentaService: CuentaService) {}
 
 	@ApiOperation({
 		summary: 'Crea una cuenta ',
 	})
+	@Roles('USUARIO')
 	@Post()
 	async create(@Body() cuentaCreate: CreateCuentaDto): Promise<any> {
 		const cuenta = await this.cuentaService.create(cuentaCreate);
@@ -35,6 +41,7 @@ export class CuentaController {
 	@ApiOperation({
 		summary: 'Obtiene todas las cuentas',
 	})
+	@Roles('USUARIO')
 	@Get()
 	async findAll(): Promise<any> {
 		const cuenta: [] = await this.cuentaService.findAll();
@@ -49,6 +56,7 @@ export class CuentaController {
 	@ApiOperation({
 		summary: 'Obtiene cuentas por ID',
 	})
+	@Roles('USUARIO')
 	@Get(':id')
 	async findOne(@Param('id', ParseIntPipe) id: number): Promise<any> {
 		const cuenta = await this.cuentaService.findOne(id);
@@ -63,6 +71,7 @@ export class CuentaController {
 	@ApiOperation({
 		summary: 'Edita las cuentas',
 	})
+	@Roles('USUARIO')
 	@Patch()
 	async update(@Body() cuentaUpdate: UpdateCuentaDto): Promise<any> {
 		const cuenta = await this.cuentaService.update(cuentaUpdate);
@@ -77,6 +86,7 @@ export class CuentaController {
 	@ApiOperation({
 		summary: 'Elimina una cuenta por ID',
 	})
+	@Roles('ADMIN')
 	@Delete(':id')
 	async remove(@Param('id', ParseIntPipe) id: number): Promise<any> {
 		await this.cuentaService.remove(id);

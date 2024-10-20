@@ -82,20 +82,7 @@ export class UpdateUsuarioDto {
 
 	@IsNotEmpty({message: 'La contraseña no puede estar vacía'})
 	@IsString({message: 'La contraseña debe ser un texto válido'})
-	@IsOptional()
-	@IsStrongPassword(
-		{
-			minLength: 8,
-			minLowercase: 1,
-			minUppercase: 1,
-			minNumbers: 1,
-		},
-		{
-			message:
-				'La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula y un número',
-		},
-	)
-	password?: string;
+	password: string;
 }
 
 export class ResponseUsuarioDto {

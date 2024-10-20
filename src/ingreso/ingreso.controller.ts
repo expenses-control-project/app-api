@@ -8,19 +8,25 @@ import {
 	Delete,
 	HttpStatus,
 	ParseIntPipe,
+	UseGuards,
 } from '@nestjs/common';
 import {IngresoService} from './ingreso.service';
 import {ApiOperation, ApiTags} from '@nestjs/swagger';
 import {CreateIngresoDto, UpdateIngresoDto} from './ingreso.dto';
+import {AuthGuard} from 'src/auth/guards/auth.guard';
+import {RolesGuard} from 'src/auth/guards/roles.guard';
+import {Roles} from 'src/auth/decorators/roles.decorator';
 
 @ApiTags('ingreso')
 @Controller('ingreso')
+@UseGuards(AuthGuard, RolesGuard)
 export class IngresoController {
 	constructor(private readonly ingresoService: IngresoService) {}
 
 	@ApiOperation({
 		summary: 'Crea un ingreso ',
 	})
+	@Roles('USUARIO')
 	@Post()
 	async create(@Body() ingresoCreate: CreateIngresoDto): Promise<any> {
 		const ingreso = await this.ingresoService.create(ingresoCreate);
@@ -37,6 +43,7 @@ export class IngresoController {
 	@ApiOperation({
 		summary: 'Obtiene todos los ingresos',
 	})
+	@Roles('USUARIO')
 	@Get()
 	async findAll(): Promise<any> {
 		const ingreso: [] = await this.ingresoService.findAll();
@@ -51,6 +58,7 @@ export class IngresoController {
 	@ApiOperation({
 		summary: 'Obtiene ingresos por ID',
 	})
+	@Roles('USUARIO')
 	@Get(':id')
 	async findOne(@Param('id', ParseIntPipe) id: number): Promise<any> {
 		const ingreso = await this.ingresoService.findOne(id);
@@ -65,6 +73,7 @@ export class IngresoController {
 	@ApiOperation({
 		summary: 'Edita los ingresos',
 	})
+	@Roles('USUARIO')
 	@Patch()
 	async update(@Body() ingresoUpdate: UpdateIngresoDto): Promise<any> {
 		const {ingreso, cuentaActualizada} =
@@ -81,6 +90,7 @@ export class IngresoController {
 	@ApiOperation({
 		summary: 'Elimina un ingreso por ID',
 	})
+	@Roles('USUARIO')
 	@Delete(':id')
 	async remove(@Param('id', ParseIntPipe) id: number): Promise<any> {
 		await this.ingresoService.remove(id);
