@@ -79,9 +79,26 @@ export class UpdateUsuarioDto {
 	@MaxLength(50, {message: 'El usuario no puede tener más de 50 caracteres'})
 	@IsOptional()
 	usuario?: string;
+}
+export class UpdateUsuarioPasswordDto {
+	@IsNumber({}, {message: 'El idUsuario debe ser un número'})
+	@IsNotEmpty({message: 'El idUsuario no puede estar vacío'})
+	idUsuario: number;
 
 	@IsNotEmpty({message: 'La contraseña no puede estar vacía'})
 	@IsString({message: 'La contraseña debe ser un texto válido'})
+	@IsStrongPassword(
+		{
+			minLength: 8,
+			minLowercase: 1,
+			minUppercase: 1,
+			minNumbers: 1,
+		},
+		{
+			message:
+				'La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula y un número',
+		},
+	)
 	password: string;
 
 	@IsNotEmpty({message: 'La contraseña no puede estar vacía'})

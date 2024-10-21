@@ -15,6 +15,7 @@ import {
 	CreateUsuarioDto,
 	ResponseUsuarioDto,
 	UpdateUsuarioDto,
+	UpdateUsuarioPasswordDto,
 } from './usuario.dto';
 import {ApiOperation, ApiTags} from '@nestjs/swagger';
 import {PublicAcces} from 'src/auth/decorators/public.decorator';
@@ -73,6 +74,22 @@ export class UsuarioController {
 			timestamp: new Date().toISOString(),
 			message: 'Usuario encontrado con éxito',
 			usuario: usuario,
+		};
+	}
+
+	@ApiOperation({
+		summary: 'Edita la password del usuario',
+	})
+	@Roles('USUARIO')
+	@Patch('/password')
+	async updatePassword(
+		@Body() updateUsuarioPasswordDto: UpdateUsuarioPasswordDto,
+	): Promise<any> {
+		await this.usuarioService.updatePassword(updateUsuarioPasswordDto);
+		return {
+			statusCode: HttpStatus.OK,
+			timestamp: new Date().toISOString(),
+			message: 'Contraseña editada con éxito',
 		};
 	}
 

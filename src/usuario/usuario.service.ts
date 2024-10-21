@@ -8,6 +8,7 @@ import {
 	CreateUsuarioDto,
 	ResponseUsuarioDto,
 	UpdateUsuarioDto,
+	UpdateUsuarioPasswordDto,
 } from './usuario.dto';
 import {PrismaClientKnownRequestError} from '@prisma/client/runtime/library';
 import * as bcrypt from 'bcrypt';
@@ -87,6 +88,66 @@ export class UsuarioService {
 		return usuario;
 	}
 
+	async updatePassword(
+		updateUsuarioPasswordDto: UpdateUsuarioPasswordDto,
+	): Promise<void> {
+		try {
+			// Encuentra el usuario
+			const usuario = await this.prisma.usuarios.findUnique({
+				where: {idUsuario: updateUsuarioPasswordDto.idUsuario},
+			});
+
+			if (!usuario) {
+				throw new NotFoundException(
+					`Usuario con id ${updateUsuarioPasswordDto.idUsuario} no encontrado.`,
+				);
+			}
+
+			// Comprueba si viene la nueva y la vieja password en el body
+			if (
+				updateUsuarioPasswordDto.password &&
+				updateUsuarioPasswordDto.passwordOld
+			) {
+				if (
+					updateUsuarioPasswordDto.password ==
+					updateUsuarioPasswordDto.passwordOld
+				) {
+					throw new BadRequestException(
+						'Las contraseñas proporcionadas no pueden ser iguales.',
+					);
+				}
+				// compara las contraseñas
+				const isMatch = await bcrypt.compare(
+					updateUsuarioPasswordDto.passwordOld,
+					usuario.password,
+				);
+
+				if (!isMatch) {
+					throw new BadRequestException(
+						'La contraseña proporcionada no coincide con la almacenada.',
+					);
+				}
+
+				// encripta la nueva contraseña
+				const hashedPassword = await bcrypt.hash(
+					updateUsuarioPasswordDto.password,
+					+process.env.HASH_SALT,
+				);
+
+				updateUsuarioPasswordDto.password = hashedPassword;
+
+				await this.prisma.usuarios.update({
+					where: {idUsuario: updateUsuarioPasswordDto.idUsuario},
+					data: {
+						password: updateUsuarioPasswordDto.password,
+					},
+				});
+			}
+		} catch (error) {
+			throw error;
+		}
+	}
+
 	async update(updateUsuarioDto: UpdateUsuarioDto): Promise<any> {
 		try {
 			// Encuentra el usuario
@@ -100,36 +161,6 @@ export class UsuarioService {
 				);
 			}
 
-			// Comprueba si viene la nueva y la vieja password en el body
-			if (updateUsuarioDto.password && updateUsuarioDto.passwordOld) {
-				// compara las contraseñas
-				const isMatch = await bcrypt.compare(
-					updateUsuarioDto.passwordOld,
-					usuario.password,
-				);
-
-				if (!isMatch) {
-					throw new BadRequestException(
-						'Las contraseñas proporcionadas no coinciden.',
-					);
-				}
-
-				// encripta la nueva contraseña
-				const hashedPassword = await bcrypt.hash(
-					updateUsuarioDto.password,
-					+process.env.HASH_SALT,
-				);
-
-				updateUsuarioDto.password = hashedPassword;
-			} else if (
-				updateUsuarioDto.password &&
-				!updateUsuarioDto.passwordOld
-			) {
-				throw new BadRequestException(
-					'Debes proporcionar la contraseña anterior para actualizar la nueva.',
-				);
-			}
-
 			const updatedUsuario = await this.prisma.usuarios.update({
 				where: {idUsuario: updateUsuarioDto.idUsuario},
 				data: {
@@ -138,7 +169,6 @@ export class UsuarioService {
 					edad: updateUsuarioDto.edad || undefined,
 					email: updateUsuarioDto.email || undefined,
 					usuario: updateUsuarioDto.usuario || undefined,
-					password: updateUsuarioDto.password || undefined,
 				},
 			});
 
