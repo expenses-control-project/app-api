@@ -11,7 +11,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   const corsOptions: CorsOptions = {
-    origin: ['https://app-expenses-control.web.app/'],
+    origin: ['https://app-expenses-control.web.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   };
