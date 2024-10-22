@@ -92,6 +92,17 @@ export class GastoService {
 						cuenta: true, // Incluye las cuentas asociadas
 					},
 				},
+				establecimiento: {
+					select: {
+						nombreEstablecimiento: true,
+						rubro: {
+							select: {
+								nombreRubro: true,
+								idRubro: true
+							}
+						}
+					}
+				}
 			},
 		});
 		if (gastos.length === 0) {

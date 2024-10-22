@@ -29,7 +29,15 @@ export class IngresoService {
 	}
 
 	async findAll(): Promise<any> {
-		const ingresos = await this.prisma.ingresos.findMany();
+		const ingresos = await this.prisma.ingresos.findMany({
+			include: {
+				cuenta: {
+					select: {
+						nombre: true
+					}
+				}
+			}
+		});
 
 		if (ingresos.length === 0) {
 			throw new NotFoundException(`No se encontraron ingresos`);
