@@ -11,7 +11,7 @@
 		"start": "nest start",
 		"start:dev": "nest start --watch",
 		"start:debug": "nest start --debug --watch",
-		"start:prod": "node dist/src/main",
+		"start:prod": "pnpm run build && pnpm run start",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
 		"test": "jest",
 		"swagger": "node ./src/swagger.js",
@@ -70,7 +70,8 @@
 			"json",
 			"ts"
 		],
-		"rootDir": "src",
+		"rootDir": "./src",
+		"outDir": "./dist",
 		"testRegex": ".*\\.spec\\.ts$",
 		"transform": {
 			"^.+\\.(t|j)s$": "ts-jest"
