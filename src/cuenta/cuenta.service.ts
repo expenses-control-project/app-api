@@ -36,7 +36,11 @@ export class CuentaService {
 	}
 
 	async findAll(): Promise<any> {
-		const cuentas = await this.prisma.cuentas.findMany();
+		const cuentas = await this.prisma.cuentas.findMany({
+			orderBy: {
+				idCuenta: 'asc'
+			  },
+		});
 
 		if (cuentas.length === 0) {
 			throw new NotFoundException(`No se encontraron cuentas`);
@@ -65,6 +69,7 @@ export class CuentaService {
 				data: {
 					nombre: cuentaUpdate.nombre || undefined,
 					descripcion: cuentaUpdate.descripcion || undefined,
+					saldo: cuentaUpdate.saldo || undefined,
 					tipoCuenta: cuentaUpdate.tipoCuenta
 				},
 			});
